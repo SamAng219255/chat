@@ -3,12 +3,12 @@
 		<link rel="stylesheet" type="text/css" href="theme.css">
 	</head>
 	<body>
-		<div>
+		<div id="topbar">
 			<a href="./?page=0">Welcome</a>
 			<a href="./?page=1">Login</a>
 			<a href="./?page=2">Home</a>
 		</div>
-		<div>
+		<div id="stuff">
 			<?php
 				if (isset($_GET['page'])) {
 					$get = $_GET['page'];

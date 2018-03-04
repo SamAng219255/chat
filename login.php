@@ -2,14 +2,7 @@
 
 <?php
 	if(isset($_POST['username']) && isset($_POST['password'])) {
-		$firsthalf=mb_substr($_POST['password'],0,8);
-		if(strlen($_POST['password'])>8) {
-			$seconhalf=mb_substr($_POST['password'],8,16);
-		}
-		else {
-			$seconhalf=mb_substr($_POST['password'],0,8);
-		}
-		$hashed=mb_substr(shell_exec('openssl passwd '.$firsthalf),0,-1).shell_exec('openssl passwd '.$seconhalf);
+		$hashed=password_hash($_POST['password'],PASSWORD_DEFAULT);
 		echo 'Username:<br>'.$_POST['username'].'<br>Password:<br>'.$_POST['password'].'<br>Hashed Password:<br>';
 		echo $hashed;
 	}

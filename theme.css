@@ -1,1 +1,40 @@
-
+body {
+	margin:0px;
+	color:#81941D;
+	background-color:#1A1E06;
+}
+a {
+	color:#5E6C15;
+	text-decoration:none;
+}
+#topbar {
+	padding-top:40px;
+	text-align:center;
+	color:#1A1E06;
+	background-color:#81941D;
+}
+#topbar a {
+	color:#40490F;
+}
+#stuff {
+	padding:20px;
+}
+#cphold {
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform: translate(-50%, -50%);
+}
+.cp {
+	float:left;
+	width:300px;
+	position:relative;
+	background-color: #0E0F03;
+	padding:10% 0px;
+	margin: 5px;
+}
+.loginform {
+	width:180px;
+	height:190px;
+	margin:60px;
+}
