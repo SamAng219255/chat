@@ -131,11 +131,19 @@ void copystr(char* target, const char* origin, int len) {
 }
 
 int main(int argc, const char * argv[]) {
+	int typedlen=0;
+	if(argc<3) {
+		while(argv[1][typedlen]!=(char)(3) && argv[1][typedlen]!=""[0]) {
+			typedlen++;
+		}
+	}
+	else {
+		typedlen=atoi(argv[2]);
+	}
     //fillmine();
 	readtable();
     char currentpattern[11];
     int cpl=0;
-    int typedlen=atoi(argv[2]);
     char typed[32767];
     copystr(typed, argv[1], typedlen);
     char final[32767];
