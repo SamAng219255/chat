@@ -28,6 +28,9 @@
 					case 3:
 					require 'login.php';
 					break;
+					case 4:
+					require 'register.php';
+					break;
 				}
 			?>
 		</div>
