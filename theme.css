@@ -23,6 +23,8 @@ a {
 	position:absolute;
 	top:50%;
 	left:50%;
+	height:300px;
+	width:620px;
 	transform: translate(-50%, -50%);
 }
 .cp {
@@ -30,7 +32,7 @@ a {
 	width:300px;
 	position:relative;
 	background-color: #0E0F03;
-	padding:10% 0px;
+	/*padding:10% 0px;*/
 	margin: 5px;
 }
 .loginform {
