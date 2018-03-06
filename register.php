@@ -1,6 +1,7 @@
 <?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=4">';};?>
 
 <?php
+	echo PHP_OS;
 	if($_POST['username']!='' && $_POST['password']!='' && $_POST['password2']!='') {
 		if($_POST['password']==$_POST['password2']) {
 			$hashed=password_hash($_POST['password'],PASSWORD_DEFAULT);

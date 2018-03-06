@@ -4,8 +4,8 @@
 	</head>
 	<body>
 		<div id="topbar">
-			<a href="./?page=0">Welcome</a>
-			<a href="./?page=1">Login</a>
+			<a href="./?page=0">Welcome</a>&nbsp;
+			<a href="./?page=1">Login</a>&nbsp;
 			<a href="./?page=2">Home</a>
 		</div>
 		<div id="stuff">
