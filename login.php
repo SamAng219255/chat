@@ -1,4 +1,4 @@
-<?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=1">';};?>
+<?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=3">';};?>
 
 <?php
 	if(isset($_POST['username']) && isset($_POST['password'])) {
@@ -7,6 +7,6 @@
 		echo $hashed;
 	}
 	else {
-		echo '<meta http-equiv="refresh" content="0; URL=./?page=3">';
+		echo '<meta http-equiv="refresh" content="0; URL=./?page=1">';
 	}
 ?>
