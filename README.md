@@ -9,6 +9,6 @@ This will be a browser web app for a chat room.
 
 -Maybe change up page organization.
 
--Create chat room database(s).
+-Create chat room table(s).
 
 -Password Recovery.
