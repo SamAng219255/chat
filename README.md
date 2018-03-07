@@ -10,5 +10,3 @@ This will be a browser web app for a chat room.
 -Maybe change up page organization.
 
 -Create chat room database(s).
-
--Make usernames case insensitive on sign in.
