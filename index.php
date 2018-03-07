@@ -33,12 +33,14 @@
 			<!--<a href="./?page=1">Login</a>&nbsp;-->
 			<a href="./?page=2">Home</a>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
-			<div id="profilemenu">
+			<div id="profilemenu" class="noselect">
 				<?php
 					if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+						echo 'Signed in as: <br>'.$_SESSION['username'];
 						echo '<a href="./?page=5">Log Out</a>';
 					}
 					else {
+						echo 'Not signed in.';
 						echo '<a href="./?page=1">Sign In</a>';
 					}
 				?>

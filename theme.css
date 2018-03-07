@@ -80,6 +80,8 @@ a {
 	width:150px;
 	background-color:#0E0F03;
 	text-align:left;
+	color:#5E6C15;
+	font-size: 14pt;
 }
 #profilemenu a {
 	display: block;
@@ -89,4 +91,13 @@ a {
 }
 #profilemenu a:hover {
         background-color:rgba(255,255,255,0.5);
+}
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
 }

@@ -22,18 +22,18 @@
 <div id="cphold">
 <div id="lcp" class="cp"><form class="loginform" action="./?page=3" method="post">
 	Username:<br>
-	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required>'; ?><br>
+	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required maxlength=16>'; ?><br>
 	Password:<br>
-	<input type="password" name="password" required><br>
+	<input type="password" name="password" required maxlength=16><br>
 	<input type="submit" value="Login"><br>
 </form></div>
 <div id="rcp" class="cp"><form class="loginform" action="./?page=4" method="post">
         Username:<br>
-        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required>'; ?><br>
+        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required maxlength=16>'; ?><br>
         Password:<br>
-        <input type="password" name="password" required><br>
+        <input type="password" name="password" required maxlength=16><br>
         Retype Password:<br>
-        <input type="password" name="password2" required><br>
+        <input type="password" name="password2" required maxlength=16><br>
         <input type="submit" value="Register"><br>
 </form></div>
 </div>
