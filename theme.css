@@ -14,6 +14,7 @@ a {
 	background-color:#81941D;
 	font-family:Helvetica;
 	font-size:20pt;
+	height:40px;
 }
 #topbar a {
 	color:#40490F;
@@ -53,4 +54,39 @@ a {
 	font-weight:700;
 	border-radius:10px;
 	border: 2px solid #c00000;
+}
+#profileicon {
+	float:right;
+	height:70px;
+	margin: -35px 5px 5px 5px;
+	width: 70px;
+	border-radius:10px;
+	background-color: rgba(179,216,141,0);
+	background-image: url(./img/profile.png);
+	background-size: 70px;
+}
+#profileicon:hover {
+	background-color: rgba(255,255,255,0.5);
+}
+#profileicon:active {
+	background-color: rgba(255,255,255,0.75);
+}
+#profilemenu {
+	visibility:hidden;
+	position: relative;
+	top: 100%;
+	left: -75px;
+	padding:10px 0px;
+	width:150px;
+	background-color:#0E0F03;
+	text-align:left;
+}
+#profilemenu a {
+	display: block;
+	font-size: 12pt;
+	padding:5px;
+	width:140px;
+}
+#profilemenu a:hover {
+        background-color:rgba(255,255,255,0.5);
 }
