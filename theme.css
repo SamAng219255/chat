@@ -20,7 +20,7 @@ a {
 	color:#40490F;
 }
 #stuff {
-	padding:20px;
+	padding:20px 0px;
 }
 #cphold {
 	position:absolute;
@@ -82,6 +82,7 @@ a {
 	text-align:left;
 	color:#5E6C15;
 	font-size: 14pt;
+	z-index: 100;
 }
 #profilemenu a {
 	display: block;
@@ -100,4 +101,67 @@ a {
         -ms-user-select: none; /* Internet Explorer/Edge */
             user-select: none; /* Non-prefixed version, currently
                                   supported by Chrome and Opera */
+}
+#room {
+	width:75%;
+	margin:20px 0px 0px 25%;
+	height:75%;
+	background-color: #4E5912;
+	position: relative;
+}
+#textarea {
+	
+}
+#typearea {
+	position: absolute;
+	bottom:0px;
+	height:40px;
+	width:100%;
+}
+#typearea > * > * {
+	float:left;
+	display:block;
+}
+#typearea form {
+	height:40px;
+	width:100%;
+}
+#typing {
+	height:40px;
+	width:90%;
+	background-color:#6B7720;
+	border-style: none;
+	font-size: 14pt;
+	text-indent: 7pt;
+	outline-style: none;
+}
+#subbut {
+	height:40px !important;
+	width:10%;
+	font-size: 32px;
+	font-weight: 700;
+	background-color:#343C0C;
+	border-style:none;
+	color: #000000;
+}
+::placeholder {
+	color: #81941D;
+	opacity: 1;
+	font-weight:700;
+}
+::selection {
+	background-color: #81941D;
+	color:#40490F;
+}
+a::selection {
+	background-color: #40490F;
+	color:#81941D;
+}
+::-moz-selection {
+        background-color: #81941D;
+        color:#40490F;
+}
+a::-moz-selection {
+        background-color: #40490F;
+        color:#81941D;
 }

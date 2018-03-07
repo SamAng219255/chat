@@ -4,6 +4,7 @@
 
 <html>
 	<head>
+		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="theme.css">
 		<script>
 			profileShown=false;
@@ -72,6 +73,9 @@
 					break;
 					case 5:
 					require 'logout.php';
+					break;
+					case 6:
+					require 'send.php';
 					break;
 				}
 			?>
