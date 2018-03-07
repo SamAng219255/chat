@@ -1,7 +1,7 @@
 # chat
 This will be a browser web app for a chat room.
 
-TO DO:
+### TO DO:
 
 -Add profile icon where you can sign out. (session\_unset() maybe)
 
