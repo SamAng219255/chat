@@ -12,6 +12,9 @@
 		elseif($_GET['error']==2) {
 			echo 'Username is taken.';
 		}
+		elseif($_GET['error']==3) {
+			echo 'Username or Password incorrect.';
+		}
 		echo '</div>';
 	}
 ?>
@@ -19,14 +22,14 @@
 <div id="cphold">
 <div id="lcp" class="cp"><form class="loginform" action="./?page=3" method="post">
 	Username:<br>
-	<input type="text" name="username" required><br>
+	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required>'; ?><br>
 	Password:<br>
 	<input type="password" name="password" required><br>
 	<input type="submit" value="Login"><br>
 </form></div>
 <div id="rcp" class="cp"><form class="loginform" action="./?page=4" method="post">
         Username:<br>
-        <input type="text" name="username" required><br>
+        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required>'; ?><br>
         Password:<br>
         <input type="password" name="password" required><br>
         Retype Password:<br>

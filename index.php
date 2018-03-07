@@ -1,3 +1,7 @@
+<?php
+	session_start();
+?>
+
 <html>
 	<head>
 		<link rel="stylesheet" type="text/css" href="theme.css">
@@ -5,7 +9,7 @@
 	<body>
 		<div id="topbar">
 			<a href="./?page=0">Welcome</a>&nbsp;
-			<a href="./?page=1">Login</a>&nbsp;
+			<!--<a href="./?page=1">Login</a>&nbsp;-->
 			<a href="./?page=2">Home</a>
 		</div>
 		<div id="stuff">
