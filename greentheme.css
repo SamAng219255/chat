@@ -1,7 +1,7 @@
 body {
 	margin:0px;
 	color:#81941D;
-	background-color:#4E5912;
+	background-color:#1A1E06;
 }
 a {
 	color:#5E6C15;
@@ -34,7 +34,7 @@ a {
 	float:left;
 	width:300px;
 	position:relative;
-	background-color: #1C1E06;
+	background-color: #0E0F03;
 	/*padding:10% 0px;*/
 	margin: 5px;
 }
@@ -78,7 +78,7 @@ a {
 	left: -75px;
 	padding:10px 0px;
 	width:150px;
-	background-color:#1C1E06;
+	background-color:#0E0F03;
 	text-align:left;
 	color:#5E6C15;
 	font-size: 14pt;
@@ -105,16 +105,12 @@ a {
 #room {
 	width:75%;
 	margin:20px 0px 0px 25%;
-	height:625px;
-	background-color: #1A1E06;
+	height:75%;
+	background-color: #4E5912;
 	position: relative;
-	overflow: hidden;
 }
 #textarea {
-	padding:5px;
-	overflow-y:auto;
-	overflow-x:hidden;
-	height:585px;
+	
 }
 #typearea {
 	position: absolute;

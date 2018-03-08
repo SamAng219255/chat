@@ -6,7 +6,7 @@
 		$username="chatter";
 		$password="GeArᛈᚨᛊᚹᚱᛥ";
 		$conn = mysqli_connect($servername, $username, $password);
-		$query="SELECT `username`,`password` from `chat`.`users` where username='".$_POST['username']."';";
+		$query="SELECT `username`,`password` from `chat`.`users` where username='".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."';";
 		$queryresult=mysqli_query($conn,$query);
 		if($queryresult->num_rows>0) {
 			if(password_verify($_POST['password'],mysqli_fetch_row($queryresult)[1])) {

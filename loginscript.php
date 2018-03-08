@@ -8,13 +8,13 @@ $servername="127.0.0.1";
 $username="chatter";
 $password="GeArᛈᚨᛊᚹᚱᛥ";
 $conn = mysqli_connect($servername, $username, $password);
-$query="DELETE FROM `chat`.`sessions` WHERE username='".$_POST['username']."'";
+$query="DELETE FROM `chat`.`sessions` WHERE username='".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."'";
 mysqli_query($conn,$query);
-$sql="INSERT INTO `chat`.`sessions` (`id`, `sessionID`, `userIP`, `username`) VALUES (0,'".$session."','".$_SERVER['REMOTE_ADDR']."','".$_POST['username']."')";
+$sql="INSERT INTO `chat`.`sessions` (`id`, `sessionID`, `userIP`, `username`) VALUES (0,'".$session."','".$_SERVER['REMOTE_ADDR']."','".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."')";
 mysqli_query($conn,$sql);*/
 
 $_SESSION['loggedin']='yes';
-$_SESSION['username']=$_POST['username'];
+$_SESSION['username']=str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username']);
 
 ?>
 

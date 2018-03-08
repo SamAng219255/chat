@@ -8,11 +8,11 @@
 			$username="chatter";
 			$password="GeArᛈᚨᛊᚹᚱᛥ";
 			$conn = mysqli_connect($servername, $username, $password);
-			$query="SELECT `username` from `chat`.`users` where username='".$_POST['username']."';";
+			$query="SELECT `username` from `chat`.`users` where username='".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."';";
 			//echo $query.'<br>';
 			var_dump(mysqli_query($conn,$query));
 			if(mysqli_query($conn,$query)->num_rows<1) {
-				$sql="INSERT INTO `chat`.`users` (`id`, `username`, `password`, `quirks`) VALUES ('','".$_POST['username']."','".$hashed."','E')";
+				$sql="INSERT INTO `chat`.`users` (`id`, `username`, `password`, `quirks`) VALUES ('','".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."','".$hashed."','E')";
 				mysqli_query($conn,$sql);
 				require 'loginscript.php';
 				//echo 'You have successfully created the account: '.$_POST['username'].'.<br>';
