@@ -10,6 +10,14 @@
 #include <stdlib.h>
 #include <string.h>
 
+int max(int x, int y) {
+	int outcome=x;
+	if(y>x) {
+		outcome=y;
+	}
+	return outcome;
+}
+
 char toLower(char chr) {
 	char result=chr;
 	if((int)chr>=65 && (int)chr<=90) {
@@ -19,14 +27,15 @@ char toLower(char chr) {
 }
 
 typedef struct {
-    char typed[11];
+    char typed[256];
     int typedlen;
-    char result[11];
+    char result[256];
     int resultlen;
 } pattern;
 
-pattern patterns[11];
+pattern patterns[256];
 int activepatterns=0;
+int longestlen=0;
 
 void fillmine() {
     activepatterns=7;
@@ -44,23 +53,24 @@ void fillmine() {
     patterns[4]=spat;
     patterns[5]=mpat;
     patterns[6]=upat;
+	longestlen=3;
 }
 
-void readtable() {
-	FILE *fptr;
+void readtable(const char* table) {
 	char chr;
 	int doing=1;
-	fptr = fopen("quirk_table.txt", "r");
-	for(int line=0; line<11; line++) {
+	int txtplace=0;
+	for(int line=0; line<256; line++) {
 		if(doing==0) {
 			break;
 		}
-		char datastuff[2][11];
+		char datastuff[2][256];
 		int datalen[2]={0,0};
 		int part=0;
 		int mode=0;
-		for(int i=0; i<30; i++) {
-			chr = fgetc(fptr);
+		for(int i=0; i<512; i++) {
+			chr = table[txtplace];
+			txtplace++;
 			//printf("%c",chr);
 			if(i==0) {
 				if(chr=='E') {
@@ -76,7 +86,7 @@ void readtable() {
 					else if(chr=='=') {
 						part++;
 					}
-					else if(chr=='\n') {
+					else if(chr==';') {
 						break;
 					}
 				}
@@ -100,6 +110,7 @@ void readtable() {
 			}
 		}
 		patterns[line].typedlen=datalen[0];
+		longestlen=max(datalen[0],longestlen);
 		patterns[line].resultlen=datalen[1];
 		for(int j=0; j<datalen[0]; j++) {
 			patterns[line].typed[j]=datastuff[0][j];
@@ -111,7 +122,6 @@ void readtable() {
 		//printf("pattern %i: .typed=\"%s\" .typedlen=%i .result=%s .resultlen=%i \n",line,patterns[line].typed,patterns[line].typedlen,patterns[line].result,patterns[line].resultlen);
 	}
 	activepatterns--;
-	fclose(fptr);
 }
 
 int testpattern(char* tobetested, char* pat, int len) {
@@ -132,17 +142,12 @@ void copystr(char* target, const char* origin, int len) {
 
 int main(int argc, const char * argv[]) {
 	int typedlen=0;
-	if(argc<3) {
-		while(argv[1][typedlen]!=(char)(3) && argv[1][typedlen]!=""[0]) {
-			typedlen++;
-		}
-	}
-	else {
-		typedlen=atoi(argv[2]);
+	while(argv[1][typedlen]!=(char)(3) && argv[1][typedlen]!=""[0]) {
+		typedlen++;
 	}
     //fillmine();
-	readtable();
-    char currentpattern[11];
+	readtable(argv[2]);
+    char currentpattern[longestlen];
     int cpl=0;
     char typed[32767];
     copystr(typed, argv[1], typedlen);

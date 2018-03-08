@@ -6,9 +6,9 @@ $servername="127.0.0.1";
 $username="chatter";
 $password="GeArᛈᚨᛊᚹᚱᛥ";
 $conn = mysqli_connect($servername, $username, $password);
-$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES ('','".$_SESSION['username']."','".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['text'])."')";
+$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['text'])."')";
 echo $sql;
-mysqli_query($conn,$sql);
+var_dump(mysqli_query($conn,$sql));
 
 ?>
 
