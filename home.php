@@ -8,6 +8,7 @@
 	$username="chatter";
 	$password="GeArᛈᚨᛊᚹᚱᛥ";
 	$conn = mysqli_connect($servername, $username, $password);
+	mysqli_query($conn,"SET NAMES 'utf8'");
 	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 64) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
