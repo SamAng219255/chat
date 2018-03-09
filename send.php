@@ -1,10 +1,10 @@
 <meta charset="utf-8">
-<?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
+<?php //if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
 
 <?php
 
-var_dump($_POST);
-echo "<br>";
+//var_dump($_POST);
+//echo "<br>";
 
 $servername="127.0.0.1";
 $username="chatter";
@@ -19,8 +19,10 @@ echo $text."<br>";
 $text=shell_exec("./quirks \"".$text."\" \"".$quirk."\"");
 echo "./quirks '".$text."' '".$quirk."'<br>";
 echo $text.'<br>';*/
-$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".str_replace(array("\\","'"),array("\\\\","\\'"),$text)."')";
-echo $sql;
+$text=str_replace(array("\\","'"),array("\\\\","\\'"),$text);
+$srnm=str_replace(array("\\","'"),array("\\\\","\\'"),$_POST['username']);
+$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$srnm."','".$text."')";
+//echo $sql;
 var_dump(mysqli_query($conn,$sql));
 
 ?>

@@ -27,6 +27,7 @@
                         }
 			}
 		</script>
+		<script src="jquery.js"></script>
 	</head>
 	<body>
 		<div id="topbar">

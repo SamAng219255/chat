@@ -1,7 +1,19 @@
+/*
+Primary: 81941D
+Dark1: 1C1E06
+Dark2: 2C0047
+Purple1: 661D94
+Light1: C7E042
+Light2: AF33FF
+Light3: A3FA95*
+Light4: 6648A1
+Bright1: ABA319
+*/
+
 body {
 	margin:0px;
 	color:#81941D;
-	background-color:#4E5912;
+	background-color:#3D4707;
 }
 a {
 	color:#5E6C15;
@@ -17,7 +29,7 @@ a {
 	height:40px;
 }
 #topbar a {
-	color:#40490F;
+	color:#661D94;
 }
 #stuff {
 	padding:20px 0px;
@@ -78,9 +90,9 @@ a {
 	left: -75px;
 	padding:10px 0px;
 	width:150px;
-	background-color:#1C1E06;
+	background-color:#2C0047;
 	text-align:left;
-	color:#5E6C15;
+	color:#661D94;
 	font-size: 14pt;
 	z-index: 100;
 }
@@ -88,10 +100,12 @@ a {
 	display: block;
 	font-size: 12pt;
 	padding:5px;
-	width:140px;
+	width:100%;
+	color:#AF33FF;
 }
 #profilemenu a:hover {
         background-color:rgba(255,255,255,0.5);
+	color:#2C0047;
 }
 .noselect {
   -webkit-touch-callout: none; /* iOS Safari */
@@ -104,9 +118,11 @@ a {
 }
 #room {
 	width:75%;
-	margin:20px 0px 0px 25%;
+	margin:0px;
+	float: right;
+	top:20px;
 	height:625px;
-	background-color: #1A1E06;
+	background-color: #1C1E06;
 	position: relative;
 	overflow: hidden;
 }
@@ -115,6 +131,7 @@ a {
 	overflow-y:auto;
 	overflow-x:hidden;
 	height:585px;
+	color:#ABA319;
 }
 #typearea {
 	position: absolute;
@@ -126,46 +143,61 @@ a {
 	float:left;
 	display:block;
 }
-#typearea form {
-	height:40px;
-	width:100%;
-}
 #typing {
 	height:40px;
 	width:90%;
-	background-color:#6B7720;
+	background-color:#6648A1;
 	border-style: none;
 	font-size: 14pt;
 	text-indent: 7pt;
 	outline-style: none;
+	color: #2C0047;
 }
 #subbut {
 	height:40px !important;
 	width:10%;
 	font-size: 32px;
 	font-weight: 700;
-	background-color:#343C0C;
+	background-color:#661D94;
 	border-style:none;
 	color: #000000;
 }
+#chatpicker {
+	width:20%;
+        margin:0px;
+        float: left;
+        height:625px;
+	top: 20px;
+        background-color: #2C0047;
+        position: relative;
+        overflow: hidden;
+}
+#chatpicker a {
+        display: block;
+        font-size: 14pt;
+	font-weight:500;
+	font-family:Helvetica;
+        padding:5px;
+        width:100%;
+        color:#AF33FF;
+}
+#chatpicker a:hover {
+        background-color:rgba(255,255,255,0.5);
+	color:#2C0047;
+}
 ::placeholder {
-	color: #81941D;
+	color: #2C0047;
 	opacity: 1;
 	font-weight:700;
 }
 ::selection {
-	background-color: #81941D;
-	color:#40490F;
-}
-a::selection {
-	background-color: #40490F;
-	color:#81941D;
+	background-color: #AF33FF;
+	color:#2C0047;
 }
 ::-moz-selection {
-        background-color: #81941D;
-        color:#40490F;
+        background-color: #AF33FF;
+        color:#2C0047;
 }
-a::-moz-selection {
-        background-color: #40490F;
-        color:#81941D;
+#username {
+	position:absolute;
 }
