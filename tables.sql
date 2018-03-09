@@ -2,6 +2,8 @@ CREATE TABLE `users` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,
   `password` varchar(64) NOT NULL,
+  `txtcolor` char(6) NOT NULL DEFAULT 'ABA319',
+  `bckcolor` char(8) NOT NULL DEFAULT '1C1E0600',
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8mb4;

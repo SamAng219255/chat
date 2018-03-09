@@ -6,11 +6,7 @@
 //var_dump($_POST);
 //echo "<br>";
 
-$servername="127.0.0.1";
-$username="chatter";
-$password="GeArᛈᚨᛊᚹᚱᛥ";
-$conn = mysqli_connect($servername, $username, $password);
-mysqli_query($conn,"SET NAMES 'utf8'");
+require 'db.php';
 $text=$_POST['text'];
 /*$query="SELECT `quirks` from `chat`.`users` where username='".$_SESSION['username']."'";
 echo $query.'<br>';

@@ -1,6 +1,18 @@
 <?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
 <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
 
+<style><?php
+require 'db.php';
+$query="SELECT `username`,`txtcolor`,`bckcolor` FROM `chat`.`users`";
+$queryresult=mysqli_query($conn,$query);
+for($i=0; $i<$queryresult->num_rows; $i++) {
+	$row=mysqli_fetch_row($queryresult);
+	echo 'p[user="'.$row[0].'"] {
+		color:#'.$row[1].';
+		background-color:#'.$row[2].';
+	}';
+}
+?></style>
 
 <div id="chatpicker">
 <a href="./?page=2">General</a>
@@ -9,11 +21,6 @@
 <div id="room">
 <div id="textarea">
 <?php
-	$servername="127.0.0.1";
-	$username="chatter";
-	$password="GeArᛈᚨᛊᚹᚱᛥ";
-	$conn = mysqli_connect($servername, $username, $password);
-	mysqli_query($conn,"SET NAMES 'utf8'");
 	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 64) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
@@ -22,7 +29,7 @@
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			echo '<p>'.$row[1].': '.$row[2].'</p>';
+			echo '<p user="'.$row[1].'">'.$row[1].': '.$row[2].'</p>';
 			$lastmsg=$row[0];
 		}
 	}

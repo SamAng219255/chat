@@ -40,6 +40,7 @@
 					if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 						echo 'Signed in as: <br>'.$_SESSION['username'];
 						echo '<a href="./?page=5">Log Out</a>';
+						echo '<a href="./?page=7">Settings</a>';
 					}
 					else {
 						echo 'Not signed in.';
@@ -77,6 +78,9 @@
 					break;
 					case 6:
 					require 'send.php';
+					break;
+					case 7:
+					require 'setting.php';
 					break;
 				}
 			?>

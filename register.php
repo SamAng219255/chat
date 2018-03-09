@@ -4,10 +4,7 @@
 	if($_POST['username']!='' && $_POST['password']!='' && $_POST['password2']!='') {
 		if($_POST['password']==$_POST['password2']) {
 			$hashed=password_hash($_POST['password'],PASSWORD_DEFAULT);
-			$servername="127.0.0.1";
-			$username="chatter";
-			$password="GeArᛈᚨᛊᚹᚱᛥ";
-			$conn = mysqli_connect($servername, $username, $password);
+			require 'db.php';
 			$query="SELECT `username` from `chat`.`users` where username='".str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username'])."';";
 			//echo $query.'<br>';
 			var_dump(mysqli_query($conn,$query));

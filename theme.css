@@ -185,6 +185,19 @@ a {
         background-color:rgba(255,255,255,0.5);
 	color:#2C0047;
 }
+#settingbox {
+	background-color: #1C1E06;
+	min-height: 75%;
+	width: 50%;
+	margin: 20px auto 10px;
+	padding: 5%;
+}
+#settingbox h1 {
+	color: #661D94;
+}
+hr {
+	border-color: #81941D;
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;
