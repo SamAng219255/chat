@@ -121,7 +121,7 @@ a {
 	margin:0px;
 	float: right;
 	top:20px;
-	height:625px;
+	/*height:625px;*/
 	background-color: #1C1E06;
 	position: relative;
 	overflow: hidden;
@@ -130,8 +130,9 @@ a {
 	padding:5px;
 	overflow-y:auto;
 	overflow-x:hidden;
-	height:585px;
+	height:75%;
 	color:#ABA319;
+	margin-bottom:20px;
 }
 #typearea {
 	position: absolute;
@@ -166,7 +167,7 @@ a {
 	width:20%;
         margin:0px;
         float: left;
-        height:625px;
+        height:75%;
 	top: 20px;
         background-color: #2C0047;
         position: relative;
@@ -198,6 +199,9 @@ a {
 hr {
 	border-color: #81941D;
 }
+#settingbox ul li form {
+	display:inline-block;
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;
@@ -213,4 +217,7 @@ hr {
 }
 #username {
 	position:absolute;
+}
+::-webkit-scrollbar { 
+    display: none; 
 }

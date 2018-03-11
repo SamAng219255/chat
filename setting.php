@@ -26,10 +26,17 @@ elseif(isset($_POST['bckcolor'])) {
 		<li><form method="post">Foreground:
 			<input type="color" name="txtcolor" value="#'.$queryresult[0].'">
 			<input type="submit" value="change">
-		</form></li>
+		</form><form method="post">
+                        <input type="hidden" name="txtcolor" value="#ABA319">
+                        <input type="submit" value="reset">
+                </form>
+		</li>
 		<li><form method="post">Background:
 			<input type="color" name="bckcolor" value="#'.$queryresult[1].'">
 			<input type="submit" value="change">
-		</form></li>
+		</form><form method="post">
+                        <input type="hidden" name="bckcolor" value="#1C1E06">
+                        <input type="submit" value="reset">
+                </form></li>
 	</ul>'; ?>
 </div>

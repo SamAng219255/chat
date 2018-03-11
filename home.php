@@ -1,18 +1,7 @@
 <?php if($_SERVER['PHP_SELF']!='/chat/index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
 <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
 
-<style><?php
-require 'db.php';
-$query="SELECT `username`,`txtcolor`,`bckcolor` FROM `chat`.`users`";
-$queryresult=mysqli_query($conn,$query);
-for($i=0; $i<$queryresult->num_rows; $i++) {
-	$row=mysqli_fetch_row($queryresult);
-	echo 'p[user="'.$row[0].'"] {
-		color:#'.$row[1].';
-		background-color:#'.$row[2].';
-	}';
-}
-?></style>
+<style id="userlinestyles"></style>
 
 <div id="chatpicker">
 <a href="./?page=2">General</a>
@@ -21,16 +10,21 @@ for($i=0; $i<$queryresult->num_rows; $i++) {
 <div id="room">
 <div id="textarea">
 <?php
+	require 'db.php';
 	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 64) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
 	//echo '<br>';
 	$lastmsg=0;
+	$usersvisible=array();
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			echo '<p user="'.$row[1].'">'.$row[1].': '.$row[2].'</p>';
+			echo '<p user="'.strtolower($row[1]).'">'.$row[1].': '.$row[2].'</p>';
 			$lastmsg=$row[0];
+			if(!in_array(strtolower($row[1]),$usersvisible)) {
+				array_push($usersvisible,strtolower($row[1]));
+			}
 		}
 	}
 	else {
@@ -38,6 +32,15 @@ for($i=0; $i<$queryresult->num_rows; $i++) {
 	}
 	echo '</div>';
 	echo '<div id="lastmsg" style="visibility:hidden;">'.$lastmsg.'</div>';
+	echo '<div id="visibleusers" style="visibility:hidden;">';
+	$vuCount=count($usersvisible);
+	for($i=0; $i<$vuCount; $i++) {
+		if($i>0) {
+			echo json_decode('"\u001D"');
+		}
+		echo $usersvisible[$i];
+	}
+	echo '</div>';
 ?>
 <div id="typearea">
 	<div>
@@ -59,6 +62,12 @@ if(isset($_POST['text'])) {
 	echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';
 }
 ?>
+
+<script>
+$.post('getuserstyles.php', {userlist: document.getElementById("visibleusers").innerHTML}, function(data) {
+	$('style#userlinestyles').append(data);
+});
+</script>
 
 <script>
 lstmsg=parseInt(document.getElementById("lastmsg").innerHTML);
