@@ -11,11 +11,11 @@
 <div id="textarea">
 <?php
 	require 'db.php';
-	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 64) AS `table` ORDER by id ASC";
+	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
 	//echo '<br>';
-	$lastmsg=0;
+	$lastmsg=-1;
 	$usersvisible=array();
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
@@ -29,6 +29,7 @@
 	}
 	else {
 		echo 'There are no messages.';
+		
 	}
 	echo '</div>';
 	echo '<div id="lastmsg" style="visibility:hidden;">'.$lastmsg.'</div>';
@@ -77,6 +78,14 @@ function updatechatbox() {
 		var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
 		//console.log(data);
 		var foo=data.split(/\|(.+)/);
+		if(lstmsg<0 && typeof foo[1] != "undefined") {
+			$('div#textarea').text("");
+		}
+		$.post('getnewstyles.php', {userlist: document.getElementById("visibleusers").innerHTML, lstmsg: lstmsg}, function(data) {
+			var bar=data.split(/\u001C(.+)/);
+			$('style#userlinestyles').append(bar[0]);
+			$('div#visibleusers').append(bar[1]);
+		});
 		if(!isNaN(foo[0])) {
 			lstmsg=parseInt(foo[0]);
 		}

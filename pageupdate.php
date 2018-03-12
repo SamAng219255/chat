@@ -8,7 +8,7 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			$echos.='<p user="'.$row[1].'">'.$row[1].': '.$row[2].'</p>';
+			$echos.='<p user="'.strtolower($row[1]).'">'.$row[1].': '.$row[2].'</p>';
 			$lastmsg=$row[0];
 		}
 	}
