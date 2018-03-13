@@ -15,8 +15,8 @@ echo $text."<br>";
 $text=shell_exec("./quirks \"".$text."\" \"".$quirk."\"");
 echo "./quirks '".$text."' '".$quirk."'<br>";
 echo $text.'<br>';*/
-$text=str_replace(array("\\","'"),array("\\\\","\\'"),$text);
-$srnm=str_replace(array("\\","'"),array("\\\\","\\'"),$_POST['username']);
+$text=addslashes($text);
+$srnm=addslashes($_POST['username']);
 $sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$srnm."','".$text."')";
 //echo $sql;
 var_dump(mysqli_query($conn,$sql));

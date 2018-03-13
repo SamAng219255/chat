@@ -20,7 +20,7 @@
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			echo '<p user="'.strtolower($row[1]).'">'.$row[1].': '.$row[2].'</p>';
+			echo '<p user="'.strtolower($row[1]).'">'.$row[1].': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 			if(!in_array(strtolower($row[1]),$usersvisible)) {
 				array_push($usersvisible,strtolower($row[1]));
@@ -58,7 +58,7 @@ element.scrollTop = element.scrollHeight;
 <?php
 if(isset($_POST['text'])) {
 	$text=$_POST['text'];
-	$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".str_replace(array("\\","'"),array("\\\\","\\'"),$text)."')";
+	$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."')";
 	mysqli_query($conn,$sql);
 	echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';
 }

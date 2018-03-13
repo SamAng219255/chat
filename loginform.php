@@ -22,14 +22,14 @@
 <div id="cphold">
 <div id="lcp" class="cp"><form class="loginform" action="./?page=3" method="post">
 	Username:<br>
-	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required maxlength=16 autocomplete="username">'; ?><br>
+	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.addslashes($srnm).'" required maxlength=16 autocomplete="username">'; ?><br>
 	Password:<br>
 	<input type="password" name="password" required maxlength=16 autocomplete="current-password"><br>
 	<input type="submit" value="Login"><br>
 </form></div>
 <div id="rcp" class="cp"><form class="loginform" action="./?page=4" method="post">
         Username:<br>
-        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.$srnm.'" required maxlength=16 autocomplete="username">'; ?><br>
+        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.addslashes($srnm).'" required maxlength=16 autocomplete="username">'; ?><br>
         Password:<br>
         <input type="password" name="password" required maxlength=16 autocomplete="new-password"><br>
         Retype Password:<br>

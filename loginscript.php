@@ -14,7 +14,7 @@ $sql="INSERT INTO `chat`.`sessions` (`id`, `sessionID`, `userIP`, `username`) VA
 mysqli_query($conn,$sql);*/
 
 $_SESSION['loggedin']='yes';
-$_SESSION['username']=str_replace(array("'","\\"),array("\\'","\\\\"),$_POST['username']);
+$_SESSION['username']=addslashes($_POST['username']);
 
 ?>
 
