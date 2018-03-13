@@ -181,6 +181,7 @@ a {
         padding:5px;
         width:100%;
         color:#AF33FF;
+	cursor: pointer;
 }
 #chatpicker a:hover {
         background-color:rgba(255,255,255,0.5);
@@ -221,6 +222,24 @@ hr {
 	width: 50%;
 	visibility: hidden;
 	background-color:#1C1E06;
+	padding: 10px;
+}
+.cntscr form {
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	width: 67%
+}
+.closebutton {
+	width: 32px;
+	height: 32px;
+	float: right;
+	cursor: pointer;
+	background-color: #AF33FF;
+	color:#2C0047;
+	font-size: 32px;
+	background-image: url("./img/X.png");
 }
 ::placeholder {
 	color: #2C0047;

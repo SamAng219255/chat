@@ -127,5 +127,42 @@ function candleManu27s(e) {
 }
 </script>
 
-<div id="darken" class="grayout"></div>
-<div id="createroom" class="cntscr">Hello.</div>
+<div id="darken" class="grayout" onclick="hideCreateRoom()"></div>
+<div id="createroom" class="cntscr">
+	<div class="closebutton" onclick="hideCreateRoom()"></div>
+	<form action="./?page=9" method="post">
+		<div id="makeroomoptions">
+		Chat Room Name:
+		<input type="text" max-length=32 required name="name"><br><br>
+		Join Restriction Level:
+		<select name="joinrestriction" onchange="togglepasscode(this.value)" id="joinrestriction">
+			<option value="0">Anyone Can Join.</option>
+			<option value="1">Anyone Can Join with Passcode.</option>
+			<option value="2">User Invitation Required.</option>
+			<option value="3">Owner Invitation Required.</option>
+		</select><br><br>
+		</div>
+		<input type="submit" value="Create">
+	</form>
+	<script>
+	function togglepasscode(val) {
+		if(document.getElementById("passcodefield")!=null) {
+			if(val!=1) {
+				document.getElementById("makeroomoptions").removeChild(document.getElementById("passcodefield"));
+			}
+		}
+		else {
+			if(val==1) {
+				$('div#makeroomoptions').append('<div id="passcodefield">Passcode:<input type="text" name="passcode" max-length=16 required><br><br></div>');
+			}
+		}
+	}
+	</script>
+</div>
+
+<script>
+function hideCreateRoom() {
+	document.getElementById('darken').style='visibility:hidden;';
+	document.getElementById('createroom').style='visibility:hidden;';
+}
+</script>

@@ -18,7 +18,8 @@ CREATE TABLE `chatrooms` (
   `owner` varchar(16) NOT NULL,
   `users` text NOT NULL,
   `joinrestriction` int(2) NOT NULL,
-  `name` varchar(32) NO NULL,
+  `name` varchar(32) NOT NULL,
+  `passcode` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `privchatroom` (
