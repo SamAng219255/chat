@@ -130,7 +130,7 @@ function candleManu27s(e) {
 <div id="darken" class="grayout" onclick="hideCreateRoom()"></div>
 <div id="createroom" class="cntscr">
 	<div class="closebutton" onclick="hideCreateRoom()"></div>
-	<form action="./?page=9" method="post">
+	<form action="./?page=9" method="post" class="cntscrform">
 		<div id="makeroomoptions">
 		Chat Room Name:
 		<input type="text" max-length=32 required name="name"><br><br>
