@@ -82,6 +82,12 @@
 					case 7:
 					require 'setting.php';
 					break;
+					case 8:
+					require 'rooms.php';
+					break;
+					case 9:
+					require 'createroom.php';
+					break;
 				}
 			?>
 		</div>

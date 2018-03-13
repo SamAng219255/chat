@@ -5,12 +5,29 @@
 
 <div id="chatpicker">
 <a href="./?page=2">General</a>
+<?php
+	require 'db.php';
+	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
+	$queryresult=mysqli_query($conn,$query);
+	for($i=0; $i<$queryresult->num_rows; $i++) {
+		$row=mysqli_fetch_row($queryresult);
+		echo '<a href="./?page=8&room='.$row[0].'">'.$row[2].'</a>';
+	}
+	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
+	$queryresult=mysqli_query($conn,$query);
+	for($i=0; $i<$queryresult->num_rows; $i++) {
+		$row=mysqli_fetch_row($queryresult);
+		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+			echo '<a href="./?page=8&room='.$row[0].'">'.$row[3].'</a>';
+		}
+	}
+?>
+<a onclick="document.getElementById('darken').style='visibility:visible;'; document.getElementById('createroom').style='visibility:visible;';">Create a Private Chat Room</a>
 </div>
 <div id="username" style="visibility:hidden;"><?php echo $_SESSION['username']; ?></div>
 <div id="room">
 <div id="textarea">
 <?php
-	require 'db.php';
 	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
@@ -29,7 +46,6 @@
 	}
 	else {
 		echo 'There are no messages.';
-		
 	}
 	echo '</div>';
 	echo '<div id="lastmsg" style="visibility:hidden;">'.$lastmsg.'</div>';
@@ -110,3 +126,6 @@ function candleManu27s(e) {
 	}
 }
 </script>
+
+<div id="darken" class="grayout"></div>
+<div id="createroom" class="cntscr">Hello.</div>
