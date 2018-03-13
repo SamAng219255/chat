@@ -6,6 +6,8 @@
 <div id="chatpicker">
 <a href="./?page=2">General</a>
 <?php
+	$roomid=intval($_GET['room']);
+	$_SESSION['room']=$roomid;
 	require 'db.php';
 	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
@@ -28,7 +30,7 @@
 <div id="room">
 <div id="textarea">
 <?php
-	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
+	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` WHERE `room`=".$_SESSION['room']." ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
 	//echo '<br>';
@@ -74,7 +76,7 @@ element.scrollTop = element.scrollHeight;
 <?php
 if(isset($_POST['text'])) {
 	$text=$_POST['text'];
-	$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."')";
+	$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`,`room`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."',".$_SESSION['room'].")";
 	mysqli_query($conn,$sql);
 	echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';
 }
@@ -90,14 +92,14 @@ $.post('getuserstyles.php', {userlist: document.getElementById("visibleusers").i
 lstmsg=parseInt(document.getElementById("lastmsg").innerHTML);
 srnm=document.getElementById("username").innerHTML;
 function updatechatbox() {
-	$.post('pageupdate.php', {last: lstmsg}, function(data) {
+	$.post('roompageupdate.php', {last: lstmsg}, function(data) {
 		var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
 		//console.log(data);
 		var foo=data.split(/\|(.+)/);
 		if(lstmsg<0 && typeof foo[1] != "undefined") {
 			$('div#textarea').text("");
 		}
-		$.post('getnewstyles.php', {userlist: document.getElementById("visibleusers").innerHTML, lstmsg: lstmsg}, function(data) {
+		$.post('getroomnewstyles.php', {userlist: document.getElementById("visibleusers").innerHTML, lstmsg: lstmsg}, function(data) {
 			var bar=data.split(/\u001C(.+)/);
 			$('style#userlinestyles').append(bar[0]);
 			$('div#visibleusers').append(bar[1]);
@@ -114,7 +116,7 @@ function updatechatbox() {
 updateIntervalId=setInterval(updatechatbox,500);
 function submittxt() {
 	var txt = $('input#typing').val();
-	$.post('send.php', {text: txt, username: srnm}, function(data) {
+	$.post('sendroom.php', {text: txt, username: srnm}, function(data) {
 		console.log(data);
 		updatechatbox();
 		document.getElementById('typing').value="";
