@@ -18,7 +18,7 @@
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
-			echo '<a href="./?page=8&room='.$row[0].'">'.$row[3].'</a>';
+			echo '<a href="./?page=8&room='.$row[0].'">'.$row[4].'</a>';
 		}
 	}
 ?>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require 'db.php';
 $oldusers=explode(json_decode('"\u001D"'),$_POST['userlist']);
 $usersvisible=array();
@@ -6,7 +7,7 @@ $lstmsg="0";
 if(isset($_POST['lstmsg'])) {
 	$lstmsg=$_POST['lstmsg'];
 }
-$userquery="SELECT * FROM (SELECT `id`,`username`,`room` FROM `chat`.`chatroom` WHERE room=".$_SESSION['room']." AND id>".$lstmsg." ORDER BY id DESC) AS `table` ORDER by id ASC;";
+$userquery="SELECT * FROM (SELECT `id`,`username`,`room` FROM `chat`.`privchatroom` WHERE room=".$_SESSION['room']." AND id>".$lstmsg." ORDER BY id DESC) AS `table` ORDER by id ASC;";
 $userqueryresult=mysqli_query($conn,$userquery);
 if($userqueryresult->num_rows>0) {
         for($i=0; $i<$userqueryresult->num_rows; $i++) {

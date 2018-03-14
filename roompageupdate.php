@@ -1,7 +1,8 @@
 <?php
+session_start();
 if(isset($_POST['last']) && !empty($_POST['last'])) {
 	require 'db.php';
-	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` WHERE room=".$_SESSION['room']." AND id>".$_POST['last']." ORDER BY id DESC) AS `table` ORDER by id ASC";
+	$query="SELECT * FROM (SELECT * FROM `chat`.`privchatroom` WHERE room=".$_SESSION['room']." AND id>".$_POST['last']." ORDER BY id DESC) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	$lastmsg=0;
 	$echos='';

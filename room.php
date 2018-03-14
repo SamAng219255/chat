@@ -20,7 +20,7 @@
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
-			echo '<a href="./?page=8&room='.$row[0].'">'.$row[3].'</a>';
+			echo '<a href="./?page=8&room='.$row[0].'">'.$row[4].'</a>';
 		}
 	}
 ?>
@@ -30,7 +30,7 @@
 <div id="room">
 <div id="textarea">
 <?php
-	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` WHERE `room`=".$_SESSION['room']." ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
+	$query="SELECT * FROM (SELECT * FROM `chat`.`privchatroom` WHERE `room`=".$_SESSION['room']." ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";
 	$queryresult=mysqli_query($conn,$query);
 	//var_dump($queryresult);
 	//echo '<br>';
@@ -116,11 +116,20 @@ function updatechatbox() {
 updateIntervalId=setInterval(updatechatbox,500);
 function submittxt() {
 	var txt = $('input#typing').val();
-	$.post('sendroom.php', {text: txt, username: srnm}, function(data) {
-		console.log(data);
-		updatechatbox();
-		document.getElementById('typing').value="";
-	});
+	if(txt[0]=="/") {
+		$.post('runcommand.php', {text: txt, username: srnm}, function(data) {
+	        console.log(data);
+			updatechatbox();
+			document.getElementById('typing').value="";
+		});
+	}
+	else {
+		$.post('sendroom.php', {text: txt, username: srnm}, function(data) {
+			console.log(data);
+			updatechatbox();
+			document.getElementById('typing').value="";
+		});
+	}
 }
 function candleManu27s(e) {
 	if(e.which==13||e.keyCode==13) {
