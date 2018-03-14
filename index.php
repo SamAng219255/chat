@@ -31,9 +31,8 @@
 	</head>
 	<body>
 		<div id="topbar">
-			<a href="./?page=0">Welcome</a>&nbsp;
-			<!--<a href="./?page=1">Login</a>&nbsp;-->
-			<a href="./?page=2">Home</a>
+			<a href="./?page=0">Home</a>&nbsp;&nbsp&nbsp;
+			<a href="./?page=2">Chat</a>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
 				<?php
