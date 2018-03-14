@@ -119,7 +119,8 @@ function submittxt() {
 	if(txt[0]=="/") {
 		$.post('runcommand.php', {text: txt, username: srnm}, function(data) {
 	        console.log(data);
-			updatechatbox();
+			var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
+			$('div#textarea').append(data);
 			document.getElementById('typing').value="";
 		});
 	}
