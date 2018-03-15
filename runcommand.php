@@ -1,17 +1,19 @@
 <?php
 session_start();
 require 'db.php';
+require 'notify.php';
 /*$_POST['text'],$_SESSION['username'],$_SESSION['room']*/
 
 $command=explode(" ",$_POST['text']);
 
 if($command[0]=="/invite") {
 	if(count($command)>=2) {
-		$roomquery="SELECT `id`,`users`,`owner`,`joinrestriction` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
+		$roomquery="SELECT `id`,`users`,`owner`,`joinrestriction`,`name` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
 		$roomqueryresult=mysqli_query($conn,$roomquery);
 		$row=mysqli_fetch_row($roomqueryresult);
 		if($row[3]<3 || strtolower($row[2])==strtolower($_SESSION['username'])) {
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[1].json_decode('"\u001D"').strtolower(addslashes($command[1]))."' WHERE `id`=".$_SESSION['room'].";";
+			notify($command[1],'You have been invited to '.$row[4].'.');
 			if(mysqli_query($conn,$roomsql)) {
 				echo '<p>'.htmlspecialchars($command[1]).' has been added to the chat room.</p>';
 			}
@@ -52,7 +54,7 @@ elseif($command[0]=="/kick") {
 		$row=mysqli_fetch_row($roomqueryresult);
 		if(strtolower($row[2])==strtolower($_SESSION['username'])) {
 			$temp=explode(json_decode('"\u001D"'),$row[1]);
-			array_splice($temp,array_search($_SESSION['username'],$temp),1);
+			array_splice($temp,array_search($command[1],$temp),1);
 			$newuser="";
 			for($i=0; $i<count($temp); $i++) {
 			        if(i>0) {
@@ -61,6 +63,7 @@ elseif($command[0]=="/kick") {
 				$newuser.=$temp[i];
 			}
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newusers."' WHERE `id`=".$_SESSION['room'].";";
+			notify($command[1],'<script>window.location="./?page=2";</script>');
 			if(mysqli_query($conn,$roomsql)) {
 				echo '<p>'.htmlspecialchars($command[1]).' has been removed from the chat room.</p>';
 			}

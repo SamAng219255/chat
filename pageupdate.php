@@ -1,4 +1,5 @@
 <?php
+session_start();
 if(isset($_POST['last']) && !empty($_POST['last'])) {
 	require 'db.php';
 	$query="SELECT * FROM (SELECT * FROM `chat`.`chatroom` WHERE id>".$_POST['last']." ORDER BY id DESC) AS `table` ORDER by id ASC";
@@ -17,6 +18,22 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 			$lastmsg=$row[0];
 		}
 	}
+	$pendingquery="SELECT `username`,`pending` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+	$pendingqueryresult=mysqli_query($conn,$pendingquery);
+	$pendingrow=mysqli_fetch_row($pendingqueryresult);
+	if($pendingrow[1]!="") {
+		$temp=explode(json_decode('"\u001D"'),$pendingrow[1]);
+		$echos.=array_splice($temp,0,1)[0];
+	}
+	$newpending="";
+	for($i=0; $i<count($temp); $i++) {
+		if(i>0) {
+			$newpending.=json_decode('"\u001D"');
+		}
+		$newpending.=$temp[i];
+	}
+	$pendingsql="UPDATE `chat`.`users` SET `pending`='".$newpending."' WHERE `username`='".$_SESSION['username']."';";
+	mysqli_query($conn,$pendingsql);
 	echo $lastmsg.'|';
 	echo $echos;
 }
