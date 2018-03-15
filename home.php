@@ -95,6 +95,11 @@ $.post('getuserstyles.php', {userlist: document.getElementById("visibleusers").i
 lstmsg=parseInt(document.getElementById("lastmsg").innerHTML);
 srnm=document.getElementById("username").innerHTML;
 function updatechatbox() {
+	$.post('kickbad.php',{},function(data) {
+		if(data!="legal") {
+			document.location="?page=1";
+		}
+	});
 	$.post('pageupdate.php', {last: lstmsg}, function(data) {
 		console.log(data);
 		var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
@@ -122,7 +127,6 @@ function submittxt() {
 	var txt = $('input#typing').val();
 	$.post('send.php', {text: txt, username: srnm}, function(data) {
 		console.log(data);
-		updatechatbox();
 		document.getElementById('typing').value="";
 	});
 }

@@ -21,6 +21,7 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 	$pendingquery="SELECT `username`,`pending` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
         $pendingqueryresult=mysqli_query($conn,$pendingquery);
         $pendingrow=mysqli_fetch_row($pendingqueryresult);
+	$temp=array();
         if($pendingrow[1]!="") {
                 $temp=explode(json_decode('"\u001D"'),$pendingrow[1]);
                 $echos.=array_splice($temp,0,1)[0];

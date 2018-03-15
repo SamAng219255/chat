@@ -1,4 +1,6 @@
 <?php
+session_start();
+require 'db.php';
 
 function notify($who,$what) {
 	$pendingquery="SELECT `username`,`pending` FROM `chat`.`users` WHERE `username`='".addslashes($who)."';";

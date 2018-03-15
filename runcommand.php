@@ -75,7 +75,7 @@ elseif($command[0]=="/kick") {
 			echo '<p>This command can only be used by the owner.</p>';
 		}
 	}
-	else {             
+	else {
 		echo '<p>Not enough arguments given.</p>';
 		echo '<p>Syntax: /kick &lt;username&gt;</p>';
 	}

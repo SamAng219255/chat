@@ -132,7 +132,6 @@ function submittxt() {
 	else {
 		$.post('sendroom.php', {text: txt, username: srnm}, function(data) {
 			console.log(data);
-			updatechatbox();
 			document.getElementById('typing').value="";
 		});
 	}
