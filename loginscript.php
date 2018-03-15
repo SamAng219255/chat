@@ -16,6 +16,9 @@ mysqli_query($conn,$sql);*/
 $_SESSION['loggedin']='yes';
 $_SESSION['username']=addslashes($_POST['username']);
 
+$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
+mysqli_query($conn,$ipsql);
+
 ?>
 
 <meta http-equiv="refresh" content="0; URL=./?page=2">

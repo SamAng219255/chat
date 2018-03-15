@@ -3,6 +3,8 @@
 
 <?php
 
+session_start();
+
 //var_dump($_POST);
 //echo "<br>";
 
@@ -16,10 +18,13 @@ $text=shell_exec("./quirks \"".$text."\" \"".$quirk."\"");
 echo "./quirks '".$text."' '".$quirk."'<br>";
 echo $text.'<br>';*/
 $text=addslashes($text);
-$srnm=addslashes($_POST['username']);
+$srnm=addslashes($_SESSION['username']);
 $sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$srnm."','".$text."')";
 //echo $sql;
 var_dump(mysqli_query($conn,$sql));
+
+$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
+mysqli_query($conn,$ipsql);
 
 ?>
 
