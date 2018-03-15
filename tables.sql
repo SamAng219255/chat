@@ -11,6 +11,7 @@ CREATE TABLE `chatroom` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,
   `content` text NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `chatrooms` (
@@ -27,6 +28,7 @@ CREATE TABLE `privchatroom` (
   `username` varchar(16) NOT NULL,
   `content` text NOT NULL,
   `room` int(16) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 

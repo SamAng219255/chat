@@ -37,7 +37,12 @@
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			echo '<p user="'.strtolower($row[1]).'">'.$row[1].': '.htmlspecialchars($row[2]).'</p>';
+			$temptime=explode(" ",$row[3]);
+			$timesent=$temptime[0];
+			if($temptime[0]==date('Y-m-d')) {
+				$timesent=$temptime[1];
+			}
+			echo '<p user="'.strtolower($row[1]).'">['.$timesent.'] '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 			if(!in_array(strtolower($row[1]),$usersvisible)) {
 				array_push($usersvisible,strtolower($row[1]));

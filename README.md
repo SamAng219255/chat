@@ -5,7 +5,7 @@ This will be a browser web app for a chat room.
 
 -Inform users when someone joins/leaves the room.
 
--Timestamps with messages.
+-Notification like things.
 
 -Maybe change up page organization.
 

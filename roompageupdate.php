@@ -9,7 +9,12 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
-			$echos.='<p user="'.strtolower($row[1]).'">'.$row[1].': '.htmlspecialchars($row[2]).'</p>';
+			$temptime=explode(" ",$row[4]);
+			$timesent=$temptime[0];
+			if($temptime[0]==date('Y-m-d')) {
+				$timesent=$temptime[1];
+			}
+			$echos.='<p user="'.strtolower($row[1]).'">['.$timesent.'] '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 		}
 	}
