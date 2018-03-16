@@ -32,7 +32,7 @@
 	<body>
 		<div id="topbar">
 			<a href="./?page=0">Home</a>&nbsp;&nbsp&nbsp;
-			<a href="./?page=2">Chat</a>&nbsp;&nbsp&nbsp;
+			<a href="./?page=2">General Chat</a>&nbsp;&nbsp&nbsp;
 			<a href="./?page=10">Chat Rooms</a>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
