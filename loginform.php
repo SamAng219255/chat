@@ -15,6 +15,9 @@
 		elseif($_GET['error']==3) {
 			echo 'Username or Password incorrect.';
 		}
+		else {
+			echo 'Unknown Error.';
+		}
 		echo '</div>';
 	}
 ?>
