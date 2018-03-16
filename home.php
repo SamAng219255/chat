@@ -1,6 +1,8 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
 <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
 
+<title>General Chat</title>
+
 <style id="userlinestyles"></style>
 
 <div id="chatpicker">
@@ -71,10 +73,6 @@
 	</div>
 </div>
 </div>
-<script>
-element=document.getElementById("textarea");
-element.scrollTop = element.scrollHeight;
-</script>
 
 <?php
 if(isset($_POST['text'])) {
@@ -175,4 +173,9 @@ function hideCreateRoom() {
 	document.getElementById('darken').style='visibility:hidden;';
 	document.getElementById('createroom').style='visibility:hidden;';
 }
+</script>
+
+<script>
+element=document.getElementById("textarea");
+element.scrollTop = element.scrollHeight;
 </script>

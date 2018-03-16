@@ -1,6 +1,15 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
 <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
 
+<?php
+require 'db.php';
+
+$roomnamequery="SELECT `id`,`name` FROM `chat`.`chatrooms` WHERE `id`='".addslashes($_GET['room'])."';";
+$roomnamequeryresult=mysqli_query($conn,$roomnamequery);
+$roomnamerow=mysqli_fetch_row($roomnamequeryresult);
+echo '<title>'.$roomnamerow[1].'</title>';
+?>
+
 <style id="userlinestyles"></style>
 
 <div id="chatpicker">
@@ -8,7 +17,6 @@
 <?php
 	$roomid=intval($_GET['room']);
 	$_SESSION['room']=$roomid;
-	require 'db.php';
 	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
 	for($i=0; $i<$queryresult->num_rows; $i++) {

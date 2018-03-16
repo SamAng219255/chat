@@ -33,6 +33,7 @@ a {
 	color:#661D94;
 }
 #stuff {
+	height:100%
 }
 #cphold {
 	position:absolute;
@@ -193,6 +194,8 @@ a {
 	width: 50%;
 	margin: 20px auto 10px;
 	padding: 5%;
+	overflow-y: auto;
+	height: 100%;
 }
 #settingbox h1 {
 	color: #661D94;
@@ -259,6 +262,8 @@ ul.large li {
 	color: #AF33FF;
 	text-align: left;
 	position: relative;
+	margin-bottom: 20px;
+	box-shadow: 8px 8px 5px #131404;
 }
 ul.large div.h3 {
 	color: #AF33FF;

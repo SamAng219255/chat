@@ -1,5 +1,7 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=3">';};?>
 
+<title>Login</title>
+
 <?php
 	if(isset($_GET['error'])) {
 		echo '<div id="errorbox">';

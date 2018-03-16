@@ -1,6 +1,8 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?page=10">';};?>
 <?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
 
+<title>Browse Chat Rooms</title>
+
 <div id="settingbox">
 <h1>Chat Rooms</h1>
 <hr>
@@ -32,3 +34,9 @@ for($i=0; $i<$queryresult->num_rows; $i++) {
 ?>
 </ul>
 </div>
+
+<script>
+	document.getElementById("stuff").style="height: "+(window.innerHeight-stuff.offsetTop);
+	document.getElementById("settingbox").style="height: "+(window.innerHeight-stuff.offsetTop);
+</script>
+<style></style>
