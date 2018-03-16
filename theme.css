@@ -248,6 +248,45 @@ h3 {
 .inlineform {
 	display: inline;
 }
+ul.large {
+	list-style-type: none;
+	padding: 0px;
+}
+ul.large li {
+	background-color: #2C0047;
+	padding: 15px;
+	font-family: Helvetica;
+	color: #AF33FF;
+	text-align: left;
+	position: relative;
+}
+ul.large div.h3 {
+	color: #AF33FF;
+        font-size: 25px;
+        font-weight: 700;
+	width: 50%;
+	margin: 1em 0px;
+}
+ul.large div.p {
+	font-size: 17px;
+	width: 50%;
+	margin: 1em 0px;
+}
+.lockmode {
+	float: right;
+	height: 120px;
+	width: 120px;
+	background-size: 100% 100%;
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+.lockmode.locked {
+	background-image: url("./img/lock.png");
+}
+.lockmode.unlocked {
+	background-image: url("./img/lock_open.png");
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;
