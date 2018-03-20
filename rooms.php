@@ -9,7 +9,10 @@ $row=mysqli_fetch_row($roomqueryresult);
 if(Is_Numeric($_GET['room'])) {
 	$_SESSION['room']=$_GET['room'];
 }
-if(strtolower($_SESSION['username'])==strtolower($row[1]) || in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+if($roomqueryresult->num_rows<1) {
+	echo '<meta http-equiv="refresh" content="0; URL=./?page=10">';
+}
+elseif(strtolower($_SESSION['username'])==strtolower($row[1]) || in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
 	require 'room.php';
 }
 else {
@@ -27,7 +30,7 @@ else {
 		}
 		echo $row[2];
 		echo "<br>";
-		var_dump(explode(json_decode('"\u001D"'),$row[2]));
+		//var_dump(explode(json_decode('"\u001D"'),$row[2]));
 	}
 	elseif($row[3]==1) {
 		echo '<p>This room is protected by a passcode.</p>';
