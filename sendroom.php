@@ -18,9 +18,11 @@ echo "./quirks '".$text."' '".$quirk."'<br>";
 echo $text.'<br>';*/
 $text=addslashes($text);
 $srnm=addslashes($_POST['username']);
-$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`, `room`) VALUES (0,'".$srnm."','".$text."','".$_SESSION['room']."')";
-//echo $sql;
-var_dump(mysqli_query($conn,$sql));
+if(trim($text)!="") {
+	$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`, `room`) VALUES (0,'".$srnm."','".trim($text)."','".$_SESSION['room']."')";
+	//echo $sql;
+	var_dump(mysqli_query($conn,$sql));
+}
 
 $ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
 mysqli_query($conn,$ipsql);

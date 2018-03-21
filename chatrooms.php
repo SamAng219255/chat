@@ -36,7 +36,12 @@ for($i=0; $i<$queryresult->num_rows; $i++) {
 </div>
 
 <script>
-	document.getElementById("stuff").style="height: "+(window.innerHeight-stuff.offsetTop);
-	document.getElementById("settingbox").style="height: "+(window.innerHeight-stuff.offsetTop);
+	offset=parseInt($(settingbox).css('padding-top').split('px')[0])+parseInt($(settingbox).css('padding-bottom').split('px')[0])+30;
+	document.getElementById("stuff").style="height: "+(window.innerHeight-stuff.offsetTop-offset);
+	document.getElementById("settingbox").style="height: "+(window.innerHeight-settingbox.offsetTop-offset);
+	setInterval( function() {
+	document.getElementById("stuff").style="height: "+(window.innerHeight-stuff.offsetTop-offset);
+	document.getElementById("settingbox").style="height: "+(window.innerHeight-settingbox.offsetTop-offset);
+	}, 500);
 </script>
 <style></style>
