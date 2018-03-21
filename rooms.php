@@ -25,9 +25,6 @@ else {
 			mysqli_query($conn,$roomsql);
 			echo '<meta http-equiv="refresh" content="0; URL=./?page=8&room='.$_GET['room'].'">';
 		}
-		echo $row[2];
-		echo "<br>";
-		var_dump(explode(json_decode('"\u001D"'),$row[2]));
 	}
 	elseif($row[3]==1) {
 		echo '<p>This room is protected by a passcode.</p>';
