@@ -52,7 +52,11 @@ echo '<title>'.$roomnamerow[1].'</title>';
 			if($temptime[0]==date('Y-m-d')) {
 				$timesent=$temptime[1];
 			}
-			echo '<p user="'.strtolower($row[1]).'">['.$timesent.'] '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
+			$title="";
+			if(strtolower($row[1])==strtolower($roomrow[1])) {
+				$title="[room owner]";
+			}
+			echo '<p user="'.strtolower($row[1]).'">['.$timesent.']'.$title.' '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 			if(!in_array(strtolower($row[1]),$usersvisible)) {
 				array_push($usersvisible,strtolower($row[1]));

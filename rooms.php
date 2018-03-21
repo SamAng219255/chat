@@ -5,45 +5,45 @@
 require 'db.php';
 $roomquery="SELECT `id`,`owner`,`users`,`joinrestriction`,`name`,`passcode` FROM `chat`.`chatrooms` WHERE `id`='".addslashes($_GET['room'])."';";
 $roomqueryresult=mysqli_query($conn,$roomquery);
-$row=mysqli_fetch_row($roomqueryresult);
+$roomrow=mysqli_fetch_row($roomqueryresult);
 if(Is_Numeric($_GET['room'])) {
 	$_SESSION['room']=$_GET['room'];
 }
 if($roomqueryresult->num_rows<1) {
 	echo '<meta http-equiv="refresh" content="0; URL=./?p=browse">';
 }
-elseif(strtolower($_SESSION['username'])==strtolower($row[1]) || in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+elseif(strtolower($_SESSION['username'])==strtolower($roomrow[1]) || in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$roomrow[2]))) {
 	require 'room.php';
 }
 else {
 	echo '<div class="cntscr" style="visibility:visible;">';
 	echo '<h3>You are not a member of this chatroom.</h3>';
-	echo '<p>This is the screen for "'.$row[4].'", id: '.$_GET['room'].'.</p>';
-	echo '<p>The owner of this chatroom is '.$row[1].'.</p><br>';
-	if($row[3]==0) {
+	echo '<p>This is the screen for "'.$roomrow[4].'", id: '.$_GET['room'].'.</p>';
+	echo '<p>The owner of this chatroom is '.$roomrow[1].'.</p><br>';
+	if($roomrow[3]==0) {
 		echo '<p>Would you like to join this room?</p><br>';
 		echo '<form method="post"><input type="hidden" name="usersub" value="'.$_SESSION['username'].'"><input type="submit" value="Join"></form>';
 		if(isset($_POST['usersub'])) {
-			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
+			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$roomrow[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
 			mysqli_query($conn,$roomsql);
 			echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.$_GET['room'].'">';
 		}
 	}
-	elseif($row[3]==1) {
+	elseif($roomrow[3]==1) {
 		echo '<p>This room is protected by a passcode.</p>';
 		echo '<p>Please enter the passcode if you would like to join.</p>';
 		echo '<form method="post"><input type="text" name="passcode" required><input type="hidden" name="usersub" value="'.$_SESSION['username'].'"><input type="submit" value="Join"></form>';
-		if(isset($_POST['usersub']) && $_POST['passcode']==$row[5]) {
-			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
+		if(isset($_POST['usersub']) && $_POST['passcode']==$roomrow[5]) {
+			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$roomrow[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
 			mysqli_query($conn,$roomsql);
 			echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.$_GET['room'].'">';
 		}
 	}
-	elseif($row[3]==2) {
+	elseif($roomrow[3]==2) {
 		echo '<p>This room is invite only.</p>';
 		echo '<p>You must be granted access from someone already in the room to join.</p>';
 	}
-	elseif($row[3]==3) {
+	elseif($roomrow[3]==3) {
 		echo '<p>This room is invite only.</p>';
 		echo '<p>You must be granted access from the owner to join.</p>';
 	}

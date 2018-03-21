@@ -11,6 +11,8 @@ CREATE TABLE `users` (
   `ip` varchar(45) NOT NULL,
   `laston` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(16) NOT NULL,
+  `prefix` varchar(16) NOT NULL,
+  `suffix` varchar(16) NOT NULL,
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
