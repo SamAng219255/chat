@@ -45,7 +45,7 @@ elseif($command[0]=="/leave") {
 	}
 	$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newusers."' WHERE `id`=".$_SESSION['room'].";";
 	mysqli_query($conn,$roomsql);
-	echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';
+	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }
 elseif($command[0]=="/kick") {
 	if(count($command)>=2) {
@@ -63,7 +63,7 @@ elseif($command[0]=="/kick") {
 				$newuser.=$temp[i];
 			}
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newusers."' WHERE `id`=".$_SESSION['room'].";";
-			notify($command[1],'<script>window.location="./?page=2";</script>');
+			notify($command[1],'<script>window.location="./?p=general";</script>');
 			if(mysqli_query($conn,$roomsql)) {
 				echo '<p>'.htmlspecialchars($command[1]).' has been removed from the chat room.</p>';
 			}

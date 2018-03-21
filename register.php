@@ -15,20 +15,20 @@
 					require 'loginscript.php';
 				}
 				else {
-					//echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=3&username='.$_POST['username'].'">';
+					//echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=3&username='.$_POST['username'].'">';
 				}
 				//echo 'You have successfully created the account: '.$_POST['username'].'.<br>';
 				//echo $sql;
 			}
 			else {
-				echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=2&username='.$_POST['username'].'">';
+				echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=2&username='.$_POST['username'].'">';
 			}
 		}
 		else {
-			echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=0&username='.$_POST['username'].'">';
+			echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=0&username='.$_POST['username'].'">';
 		}
 	}
 	else {
-		echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=1&username='.$_POST['username'].'">';
+		echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=1&username='.$_POST['username'].'">';
 	}
 ?>

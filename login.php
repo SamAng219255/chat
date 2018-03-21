@@ -10,14 +10,14 @@
 				require 'loginscript.php';
 			}
 			else {
-				echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=3&username='.$_POST['username'].'">';
+				echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=3&username='.$_POST['username'].'">';
 			}
 		}
 		else {
-			echo '<meta http-equiv="refresh" content="0; URL=./?page=1&error=3&username='.$_POST['username'].'">';
+			echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=3&username='.$_POST['username'].'">';
 		}
 	}
 	else {
-		echo '<meta http-equiv="refresh" content="0; URL=./?page=1">';
+		echo '<meta http-equiv="refresh" content="0; URL=./?p=login">';
 	}
 ?>

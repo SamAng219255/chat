@@ -31,9 +31,9 @@
 	</head>
 	<body>
 		<div id="topbar">
-			<a href="./?page=0">Home</a>&nbsp;&nbsp&nbsp;
-			<a href="./?page=2">General Chat</a>&nbsp;&nbsp&nbsp;
-			<a href="./?page=10">Chat Rooms</a>
+			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
+			<a href="./?p=general">General Chat</a>&nbsp;&nbsp&nbsp;
+			<a href="./?p=browse">Chat Rooms</a>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
 				<?php
@@ -44,7 +44,7 @@
 					}
 					else {
 						echo 'Not signed in.';
-						echo '<a href="./?page=1">Sign In</a>';
+						echo '<a href="./?p=login">Sign In</a>';
 					}
 				?>
 			</div>
@@ -52,10 +52,30 @@
 		</div>
 		<div id="stuff">
 			<?php
+				$get=-1;
 				if (isset($_GET['page'])) {
 					$get = $_GET['page'];
-				} else {
-					$get = 0;
+				}
+				else {
+					$page=$_GET['p'];
+					if($page=='browse') {
+						$get=10;
+					}
+					elseif($page=='chat') {
+						$get=8;
+					}
+					elseif($page=='general') {
+						$get=2;
+					}
+					elseif($page=='login') {
+						$get=1;
+					}
+					elseif($page=='home') {
+						$get=0;
+					}
+					else {
+						$get=0;
+					}
 				}
 				switch($get) {
 					case 0:
@@ -92,7 +112,17 @@
 					require 'chatrooms.php';
 					break;
 				}
+				$getroom=0;
+				if(isset($_GET['room'])) {
+					$getroom=$_GET['room'];
+				}
 			?>
 		</div>
+		<script>
+			function stillhere() {
+				$.post('stillalive.php', {page:<?php echo $get ?>,room:<?php echo addslashes($getroom) ?>}, function(data){if(data!="") {console.log(data)}});
+			}
+			setInterval(stillhere,500);
+		</script>
 	</body>
 </html>

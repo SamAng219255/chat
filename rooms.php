@@ -1,5 +1,5 @@
-<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
+<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';};?>
+<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <?php
 require 'db.php';
@@ -10,7 +10,7 @@ if(Is_Numeric($_GET['room'])) {
 	$_SESSION['room']=$_GET['room'];
 }
 if($roomqueryresult->num_rows<1) {
-	echo '<meta http-equiv="refresh" content="0; URL=./?page=10">';
+	echo '<meta http-equiv="refresh" content="0; URL=./?p=browse">';
 }
 elseif(strtolower($_SESSION['username'])==strtolower($row[1]) || in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
 	require 'room.php';
@@ -26,7 +26,7 @@ else {
 		if(isset($_POST['usersub'])) {
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
 			mysqli_query($conn,$roomsql);
-			echo '<meta http-equiv="refresh" content="0; URL=./?page=8&room='.$_GET['room'].'">';
+			echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.$_GET['room'].'">';
 		}
 	}
 	elseif($row[3]==1) {
@@ -36,7 +36,7 @@ else {
 		if(isset($_POST['usersub']) && $_POST['passcode']==$row[5]) {
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[2].json_decode('"\u001D"').strtolower($_SESSION['username'])."' WHERE `id`=".$_SESSION['room'].";";
 			mysqli_query($conn,$roomsql);
-			echo '<meta http-equiv="refresh" content="0; URL=./?page=8&room='.$_GET['room'].'">';
+			echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.$_GET['room'].'">';
 		}
 	}
 	elseif($row[3]==2) {

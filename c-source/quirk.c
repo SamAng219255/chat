@@ -142,15 +142,15 @@ void copystr(char* target, const char* origin, int len) {
 
 int main(int argc, const char * argv[]) {
 	int typedlen=0;
-	while(argv[1][typedlen]!=(char)(3) && argv[1][typedlen]!=""[0]) {
+	while(argv[2][typedlen]!=(char)(3) && argv[2][typedlen]!=""[0]) {
 		typedlen++;
 	}
     //fillmine();
-	readtable(argv[2]);
+	readtable(argv[1]);
     char currentpattern[longestlen];
     int cpl=0;
     char typed[32767];
-    copystr(typed, argv[1], typedlen);
+    copystr(typed, argv[2], typedlen);
     char final[32767];
     int currentlen=0;
     for(int i=0; i<activepatterns; i++) {

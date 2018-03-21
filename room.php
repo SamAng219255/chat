@@ -1,5 +1,5 @@
-<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?page=1">'; };?>
+<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';};?>
+<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <?php
 require 'db.php';
@@ -13,7 +13,7 @@ echo '<title>'.$roomnamerow[1].'</title>';
 <style id="userlinestyles"></style>
 
 <div id="chatpicker">
-<a href="./?page=2">General</a>
+<a href="./?p=general">General</a>
 <?php
 	$roomid=intval($_GET['room']);
 	$_SESSION['room']=$roomid;
@@ -21,14 +21,14 @@ echo '<title>'.$roomnamerow[1].'</title>';
 	$queryresult=mysqli_query($conn,$query);
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
-		echo '<a href="./?page=8&room='.$row[0].'">'.$row[2].'</a>';
+		echo '<a href="./?p=chat&room='.$row[0].'">'.$row[2].'</a>';
 	}
 	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
-			echo '<a href="./?page=8&room='.$row[0].'">'.$row[4].'</a>';
+			echo '<a href="./?p=chat&room='.$row[0].'">'.$row[4].'</a>';
 		}
 	}
 ?>
@@ -91,7 +91,7 @@ if(isset($_POST['text'])) {
 	$text=$_POST['text'];
 	$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`,`room`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."',".$_SESSION['room'].")";
 	mysqli_query($conn,$sql);
-	echo '<meta http-equiv="refresh" content="0; URL=./?page=2">';
+	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }
 ?>
 
@@ -154,7 +154,7 @@ function candleManu27s(e) {
 <div id="darken" class="grayout" onclick="hideCreateRoom()"></div>
 <div id="createroom" class="cntscr">
 	<div class="closebutton" onclick="hideCreateRoom()"></div>
-	<form action="./?page=9" method="post">
+	<form action="./?page=9" method="post" class="cntscrform">
 		<div id="makeroomoptions">
 		Chat Room Name:
 		<input type="text" max-length=32 required name="name"><br><br>

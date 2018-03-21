@@ -9,6 +9,8 @@ CREATE TABLE `users` (
   `bckcolor` char(6) NOT NULL DEFAULT '1C1E06',
   `pending` text NOT NULL,
   `ip` varchar(45) NOT NULL,
+  `laston` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `active` int(16) NOT NULL,
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -27,7 +29,7 @@ CREATE TABLE `chatrooms` (
   `name` varchar(32) NOT NULL,
   `passcode` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT AUTO_INCREMENT=2 CHARSET=utf8mb4;
 CREATE TABLE `privchatroom` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,
@@ -36,6 +38,9 @@ CREATE TABLE `privchatroom` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+CREATE EVENT `cleaninactive` ON SCHEDULE EVERY 2 SECOND ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `chat`.`users` SET `active`=-1 WHERE TIMESTAMPDIFF(second, `laston`, CURRENT_TIMESTAMP)>1;
+SET GLOBAL event_scheduler = ON;
 
 GRANT ALL PRIVILEGES ON `chat`.* TO `chatter`@`localhost` IDENTIFIED BY 'GeArᛈᚨᛊᚹᚱᛥ';
 GRANT ALL PRIVILEGES ON `chat`.* TO `chatadmin`@`localhost` IDENTIFIED BY 'autologicalis' WITH GRANT OPTION;

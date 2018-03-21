@@ -1,4 +1,4 @@
-<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=0">';};?>
+<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?p=home">';};?>
 
 <?php
 
@@ -21,4 +21,4 @@ mysqli_query($conn,$ipsql);
 
 ?>
 
-<meta http-equiv="refresh" content="0; URL=./?page=2">
+<meta http-equiv="refresh" content="0; URL=./?p=general">

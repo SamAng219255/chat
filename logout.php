@@ -4,4 +4,4 @@
 $_SESSION['loggedin']='no';
 $_SEESION['username']='Not Signed In';
 ?>
-<meta http-equiv="refresh" content="0; URL=./?page=1">
+<meta http-equiv="refresh" content="0; URL=./?p=login">
