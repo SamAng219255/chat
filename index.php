@@ -57,7 +57,10 @@
 					$get = $_GET['page'];
 				}
 				else {
-					$page=$_GET['p'];
+					$page='';
+					if(isset($_GET['p'])) {
+						$page=$_GET['p'];
+					}
 					if($page=='browse') {
 						$get=10;
 					}

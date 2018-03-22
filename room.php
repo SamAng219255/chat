@@ -44,6 +44,7 @@ echo '<title>'.$roomnamerow[1].'</title>';
 	//echo '<br>';
 	$lastmsg=-1;
 	$usersvisible=array();
+	$titles=array();
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
@@ -53,10 +54,21 @@ echo '<title>'.$roomnamerow[1].'</title>';
 				$timesent=$temptime[1];
 			}
 			$title="";
+			$prefix="";
+                        $suffix="";
+                        if(!array_key_exists(strtolower($row[1]),$titles)) {
+                                $titlequery="SELECT `prefix`,`suffix`,`username` FROM `chat`.`users` WHERE `username`='".$row[1]."';";
+                                $titlequeryresult=mysqli_query($conn,$titlequery);
+                                $titlerow=mysqli_fetch_row($titlequeryresult);
+                                $titles[strtolower($row[1])]['pre']=$titlerow[0];
+                                $titles[strtolower($row[1])]['suf']=$titlerow[1];
+                        }
+                        $prefix=$titles[strtolower($row[1])]['pre'];
+                        $suffix=$titles[strtolower($row[1])]['suf'];
 			if(strtolower($row[1])==strtolower($roomrow[1])) {
 				$title="[room owner]";
 			}
-			echo '<p user="'.strtolower($row[1]).'">['.$timesent.']'.$title.' '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
+			echo '<p user="'.strtolower($row[1]).'">['.$timesent.']'.$title.' '.$prefix.$row[1].$suffix.': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 			if(!in_array(strtolower($row[1]),$usersvisible)) {
 				array_push($usersvisible,strtolower($row[1]));

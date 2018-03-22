@@ -6,6 +6,7 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 	$queryresult=mysqli_query($conn,$query);
 	$lastmsg=0;
 	$echos='';
+	$titles=array();
 	if($queryresult->num_rows>0) {
 		for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
@@ -14,7 +15,18 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 			if($temptime[0]==date('Y-m-d')) {
 				$timesent=$temptime[1];
 			}
-			$echos.='<p user="'.strtolower($row[1]).'">['.$timesent.'] '.$row[1].': '.htmlspecialchars($row[2]).'</p>';
+
+			$title=""; $prefix=""; $suffix="";
+			if(!array_key_exists(strtolower($row[1]),$titles)) {
+				$titlequery="SELECT `prefix`,`suffix`,`username` FROM `chat`.`users` WHERE `username`='".$row[1]."';";
+				$titlequeryresult=mysqli_query($conn,$titlequery);
+                                $titlerow=mysqli_fetch_row($titlequeryresult);
+                                $titles[strtolower($row[1])]['pre']=$titlerow[0];
+                                $titles[strtolower($row[1])]['suf']=$titlerow[1];
+                        }
+                        $prefix=$titles[strtolower($row[1])]['pre'];
+                        $suffix=$titles[strtolower($row[1])]['suf'];
+			$echos.='<p user="'.strtolower($row[1]).'">['.$timesent.']'.$title.' '.$prefix.$row[1].$suffix.': '.htmlspecialchars($row[2]).'</p>';
 			$lastmsg=$row[0];
 		}
 	}
