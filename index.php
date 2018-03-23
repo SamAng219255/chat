@@ -138,9 +138,7 @@
 				seen=true;
 			});
 			function checkseen() {
-				if(isset(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes')) {
-					$.post('actseen.php',{seen:seen},function (data) {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>1) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5';}});
-				}
+				$.post('actseen.php',{seen:seen},function (data) {if(data!='don\'t') {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>1) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5';}}});
 			}
 			if(!looping) {
 				setInterval(checkseen,500);

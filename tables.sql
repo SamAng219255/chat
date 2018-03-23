@@ -11,6 +11,7 @@ CREATE TABLE `users` (
   `ip` varchar(45) NOT NULL,
   `laston` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `active` int(16) NOT NULL DEFAULT '-1',
+  `lastactive` int(16) NOT NULL DEFAULT '-1',
   `prefix` varchar(16) NOT NULL DEFAULT '',
   `suffix` varchar(16) NOT NULL DEFAULT '',
   `quirks` text NOT NULL,
