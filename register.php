@@ -9,16 +9,14 @@
 			//echo $query.'<br>';
 			var_dump(mysqli_query($conn,$query));
 			if(mysqli_query($conn,$query)->num_rows<1) {
-				$sql="INSERT INTO `chat`.`users` (`id`, `username`, `password`, `quirks`, `pending`) VALUES (0,'".addslashes($_POST['username'])."','".$hashed."','E','')";
+				$sql="INSERT INTO `chat`.`users` (`id`, `username`, `password`, `quirks`, `pending`,`ip`) VALUES (0,'".addslashes($_POST['username'])."','".$hashed."','E','','".$_SERVER['REMOTE_ADDR']."')";
 				echo $sql;
 				if(mysqli_query($conn,$sql)) {
 					require 'loginscript.php';
 				}
 				else {
-					//echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=3&username='.$_POST['username'].'">';
+					echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=4&username='.$_POST['username'].'">';
 				}
-				//echo 'You have successfully created the account: '.$_POST['username'].'.<br>';
-				//echo $sql;
 			}
 			else {
 				echo '<meta http-equiv="refresh" content="0; URL=./?p=login&error=2&username='.$_POST['username'].'">';

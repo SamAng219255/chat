@@ -10,9 +10,9 @@ CREATE TABLE `users` (
   `pending` text NOT NULL,
   `ip` varchar(45) NOT NULL,
   `laston` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `active` int(16) NOT NULL,
-  `prefix` varchar(16) NOT NULL,
-  `suffix` varchar(16) NOT NULL,
+  `active` int(16) NOT NULL DEFAULT '-1',
+  `prefix` varchar(16) NOT NULL DEFAULT '',
+  `suffix` varchar(16) NOT NULL DEFAULT '',
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
