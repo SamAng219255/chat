@@ -106,6 +106,7 @@ $.post('getuserstyles.php', {userlist: document.getElementById("visibleusers").i
 lstmsg=parseInt(document.getElementById("lastmsg").innerHTML);
 srnm=document.getElementById("username").innerHTML;
 function updatechatbox() {
+	checkseen();
 	$.post('kickbad.php',{},function(data) {
 		if(data!="legal") {
 			document.location="?p=login";
@@ -133,6 +134,7 @@ function updatechatbox() {
 		}
 	});
 }
+looping=true;
 updateIntervalId=setInterval(updatechatbox,500);
 function submittxt() {
 	var txt = $('input#typing').val();
