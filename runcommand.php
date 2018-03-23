@@ -91,6 +91,8 @@ elseif($command[0]=="/room") {
 				mysqli_query($conn,$roomsql);
 				$deletesql="DELETE FROM `chat`.`chatrooms` WHERE `id`=".$_SESSION['room'].";";
 				mysqli_query($conn,$deletesql);
+				$deletesql="DELETE FROM `chat`.`privchatroom` WHERE `room`=".$_SESSION['room'].";";
+				mysqli_query($conn,$deletesql);
 			}
 			elseif($command[1]=="passcode") {
 				if(count($command)>=3) {
