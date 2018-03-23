@@ -5,11 +5,12 @@
 require 'db.php';
 
 if(isset($_POST['txtcolor'])) {
-	$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."' WHERE username='".$_SESSION['username']."';";
-	mysqli_query($conn,$sql);
-}
-elseif(isset($_POST['bckcolor'])) {
-	$sql="UPDATE `chat`.`users` SET bckcolor='".ltrim($_POST['bckcolor'],'#')."' WHERE username='".$_SESSION['username']."';";
+	if(isset($_POST['reset'])) {
+		$sql="UPDATE `chat`.`users` SET txtcolor='ABA319', bckcolor='1C1E06' WHERE username='".$_SESSION['username']."';";
+	}
+	else {
+		$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."', bckcolor='".ltrim($_POST['bckcolor'],'#')."' WHERE username='".$_SESSION['username']."';";
+	}
 	mysqli_query($conn,$sql);
 }
 
@@ -22,21 +23,15 @@ elseif(isset($_POST['bckcolor'])) {
 	<?php
 	$query="SELECT `txtcolor`,`bckcolor` from `chat`.`users` where username='".$_SESSION['username']."';";
 	$queryresult=mysqli_fetch_row(mysqli_query($conn,$query));
-	echo '<ul>
-		<li><form method="post">Foreground:
-			<input type="color" name="txtcolor" value="#'.$queryresult[0].'">
-			<input type="submit" value="change">
-		</form><form method="post">
-                        <input type="hidden" name="txtcolor" value="#ABA319">
-                        <input type="submit" value="reset">
-                </form>
-		</li>
-		<li><form method="post">Background:
-			<input type="color" name="bckcolor" value="#'.$queryresult[1].'">
-			<input type="submit" value="change">
-		</form><form method="post">
-                        <input type="hidden" name="bckcolor" value="#1C1E06">
-                        <input type="submit" value="reset">
-                </form></li>
-	</ul>'; ?>
+	echo '	<form method="post">
+			<ul style="list-style-type: none;"><li>Foreground:
+				<input type="color" name="txtcolor" value="#'.$queryresult[0].'">
+			</li><br><li>Background:
+				<input type="color" name="bckcolor" value="#'.$queryresult[1].'">
+			</li><br><li>
+				<input type="submit" value="change">
+				<input type="submit" name="reset" value="reset">
+			</li></li>
+		</form>
+	'; ?>
 </div>

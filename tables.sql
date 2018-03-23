@@ -31,7 +31,8 @@ CREATE TABLE `chatrooms` (
   `name` varchar(32) NOT NULL,
   `passcode` varchar(16) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT AUTO_INCREMENT=2 CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+ALTER TABLE `chat`.`chatrooms` AUTO_INCREMENT=2;
 CREATE TABLE `privchatroom` (
   `id` int(16) NOT NULL AUTO_INCREMENT,
   `username` varchar(16) NOT NULL,

@@ -11,18 +11,18 @@
 	require 'db.php';
 	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
-	for($i=0; $i<$queryresult->num_rows; $i++) {
+	if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		echo '<a href="./?p=chat&room='.$row[0].'">'.$row[2].'</a>';
-	}
+	}}
 	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
-	for($i=0; $i<$queryresult->num_rows; $i++) {
+	if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
 			echo '<a href="./?p=chat&room='.$row[0].'">'.$row[4].'</a>';
 		}
-	}
+	}}
 ?>
 <a onclick="document.getElementById('darken').style='visibility:visible;'; document.getElementById('createroom').style='visibility:visible;';">Create a Private Chat Room</a>
 </div>

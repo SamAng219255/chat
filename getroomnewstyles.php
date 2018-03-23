@@ -9,7 +9,7 @@ if(isset($_POST['lstmsg'])) {
 }
 $userquery="SELECT * FROM (SELECT `id`,`username`,`room` FROM `chat`.`privchatroom` WHERE room=".$_SESSION['room']." AND id>".$lstmsg." ORDER BY id DESC) AS `table` ORDER by id ASC;";
 $userqueryresult=mysqli_query($conn,$userquery);
-if($userqueryresult->num_rows>0) {
+if($userqueryresult && $userqueryresult->num_rows>0) {
         for($i=0; $i<$userqueryresult->num_rows; $i++) {
                 $row=mysqli_fetch_row($userqueryresult);
                 if(!in_array(strtolower($row[1]),$usersvisible) && !in_array(strtolower($row[1]),$oldusers)) {

@@ -12,7 +12,7 @@
 require 'db.php';
 $query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
 $queryresult=mysqli_query($conn,$query);
-for($i=0; $i<$queryresult->num_rows; $i++) {
+if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 	$row=mysqli_fetch_row($queryresult);
 	if(!in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
 		if($row[3]<2) {
@@ -29,6 +29,9 @@ for($i=0; $i<$queryresult->num_rows; $i++) {
 			echo '<div class="lockmode '.$lockmode.'"></div></li></a>';
 		}
 	}
+}}
+else {
+	echo '<p>There are no chatrooms.</p>';
 }
 
 ?>

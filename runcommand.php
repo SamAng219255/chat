@@ -87,7 +87,10 @@ elseif($command[0]=="/room") {
 		$row=mysqli_fetch_row($roomqueryresult);
 		if(strtolower($row[1])==strtolower($_SESSION['username'])) {
 			if($command[1]=="delete") {
-				echo '<p>Normally this command should delete the room but I\'m still working out the technical difficulties presented.</p>';
+				$roomsql="UPDATE `chat`.`users` SET `pending`=CONCAT('<script>window.location=\"./?p=general\"</script>".json_decode('"\u001D"')."',`pending`) WHERE `active`=".$_SESSION['room'].";";
+				mysqli_query($conn,$roomsql);
+				$deletesql="DELETE FROM `chat`.`chatrooms` WHERE `id`=".$_SESSION['room'].";";
+				mysqli_query($conn,$deletesql);
 			}
 			elseif($command[1]=="passcode") {
 				if(count($command)>=3) {
@@ -116,6 +119,14 @@ elseif($command[0]=="/room") {
 		echo '<p>Not enough arguments given.</p>';
 		echo '<p>Syntax: /room &lt;delete|passcode&gt; ...</p>';
 	}
+}
+elseif($command[0]=="/help") {
+	echo '<dl>
+		<dt>/invite</dt><dd>Syntax: /invite &lt;username&gt;</dd><dd>Adds a user to the chatroom.</dd>
+		<dt>/leave</dt><dd>Syntax: /leave</dd><dd>Remove yourself from the chatroom.</dd>
+		<dt>/kick</dt><dd>Syntax: /kick &lt;username&gt;</dd><dd>Remove another user from the chatroom.</dd>
+		<dt>/room</dt><dd>Syntax: /room &lt;delete|passcode&gt; ...</dd><dd>Various room commands.</dd>
+		</dl>';
 }
 else {
 	echo '<p>Invalid Command.</p>';

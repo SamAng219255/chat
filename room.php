@@ -151,6 +151,9 @@ function submittxt() {
 			var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
 			$('div#textarea').append(data);
 			document.getElementById('typing').value="";
+			if(atbottom) {
+				element.scrollTop = element.scrollHeight;
+			}
 		});
 	}
 	else {

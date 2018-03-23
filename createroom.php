@@ -6,7 +6,8 @@
 	$sql="INSERT INTO `chat`.`chatrooms` (`id`, `owner`, `name`,`joinrestriction`,`passcode`,`users`) VALUES (0,'".$_SESSION['username']."','".addslashes($_POST['name'])."','".addslashes($_POST['joinrestriction'])."','".addslashes($_POST['passcode'])."','".$_SESSION['username']."')";
 	echo $sql.'<br>';
 	var_dump(mysqli_query($conn,$sql));
+	$roomid=mysqli_insert_id($conn);
 	$query="INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO','Chat Room created with id: ".mysqli_insert_id($conn).".','".mysqli_insert_id($conn)."')";
 	var_dump(mysqli_query($conn,$query));
-	echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.mysqli_insert_id($conn).'">';
+	echo '<meta http-equiv="refresh" content="0; URL=./?p=chat&room='.$roomid.'">';
 ?>
