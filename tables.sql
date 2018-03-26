@@ -43,7 +43,38 @@ CREATE TABLE `privchatroom` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-CREATE EVENT `cleaninactive` ON SCHEDULE EVERY 2 SECOND ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `chat`.`users` SET `active`=-1 WHERE TIMESTAMPDIFF(second, `laston`, CURRENT_TIMESTAMP)>1;
+DELIMITER $$
+CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
+    DECLARE u varchar(16) DEFAULT "";
+    DECLARE old INT DEFAULT -1;
+    DECLARE new INT DEFAULT -1;
+    DECLARE n INT DEFAULT 0;
+    DECLARE i INT DEFAULT 0;
+    UPDATE `chat`.`users` SET `active`=-1 WHERE TIMESTAMPDIFF(second, `laston`, CURRENT_TIMESTAMP)>1;
+    SELECT COUNT(*) FROM `chat`.`users` INTO n;
+    SET i=0;
+    WHILE i<n DO
+        IF EXISTS(SELECT `id` FROM `users` WHERE `id`=i) THEN
+            SELECT `username`,`lastactive`,`active` INTO u,old,new FROM `users` WHERE `id`=i;
+            IF now<>old THEN
+                IF old=1 THEN
+                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.'));
+                ELSEIF old>1 THEN
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.',old));
+                END IF;
+                IF new=1 THEN
+                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.'));
+                ELSEIF new>1 THEN
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.',new));
+                END IF;
+            END IF;
+        END IF;
+        SET i = i + 1;
+    END WHILE;
+END$$
+DELIMITER ;
+
+CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 2 SECOND STARTS '2018-03-26 09:36:34' ON COMPLETION NOT PRESERVE ENABLE DO CALL detectMove();
 SET GLOBAL event_scheduler = ON;
 
 GRANT ALL PRIVILEGES ON `chat`.* TO `chatter`@`localhost` IDENTIFIED BY 'GeArᛈᚨᛊᚹᚱᛥ';
