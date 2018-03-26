@@ -45,32 +45,67 @@ CREATE TABLE `privchatroom` (
 
 DELIMITER $$
 CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
+
     DECLARE u varchar(16) DEFAULT "";
+
     DECLARE old INT DEFAULT -1;
+
     DECLARE new INT DEFAULT -1;
+
     DECLARE n INT DEFAULT 0;
+
     DECLARE i INT DEFAULT 0;
+
     UPDATE `chat`.`users` SET `active`=-1 WHERE TIMESTAMPDIFF(second, `laston`, CURRENT_TIMESTAMP)>1;
-    SELECT COUNT(*) FROM `chat`.`users` INTO n;
+
+    SELECT MAX(id) FROM `chat`.`users` INTO n;
+
     SET i=0;
+
     WHILE i<n DO
+
         IF EXISTS(SELECT `id` FROM `users` WHERE `id`=i) THEN
+
             SELECT `username`,`lastactive`,`active` INTO u,old,new FROM `users` WHERE `id`=i;
-            IF now<>old THEN
+
+            IF new!=old THEN
+
                 IF old=1 THEN
+
                     INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.'));
+
                 ELSEIF old>1 THEN
-                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.',old));
+
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.'),old);
+
+                ELSE INSERT INTO `chat`.`errors` (`id`,`data`) VALUES (0,CONCAT('line 18 ',u,' ',new,' ',old));
+
                 END IF;
+
                 IF new=1 THEN
+
                     INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.'));
+
                 ELSEIF new>1 THEN
-                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.',new));
+
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.'),new);
+
+                ELSE INSERT INTO `chat`.`errors` (`id`,`data`) VALUES (0,CONCAT('line 24 ',u,' ',new,' ',old));
+
                 END IF;
+
+            ELSE INSERT INTO `chat`.`errors` (`id`,`data`) VALUES (0,CONCAT('line 26 ',u,' ',new,' ',old));
+
             END IF;
+
         END IF;
+
         SET i = i + 1;
+
     END WHILE;
+
+    UPDATE `chat`.`users` SET `lastactive`=`active`;
+
 END$$
 DELIMITER ;
 
