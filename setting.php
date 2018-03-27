@@ -9,7 +9,11 @@ if(isset($_POST['txtcolor'])) {
 		$sql="UPDATE `chat`.`users` SET txtcolor='ABA319', bckcolor='1C1E06' WHERE username='".$_SESSION['username']."';";
 	}
 	else {
-		$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."', bckcolor='".ltrim($_POST['bckcolor'],'#')."' WHERE username='".$_SESSION['username']."';";
+		$seemove='0';
+		if(isset($_POST['leftjoinvisible']) && $_POST['leftjoinvisible']=='on') {
+			$seemove='1';
+		}
+		$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."', bckcolor='".ltrim($_POST['bckcolor'],'#')."', seemove='".$seemove."' WHERE username='".$_SESSION['username']."';";
 	}
 	mysqli_query($conn,$sql);
 }
@@ -17,21 +21,24 @@ if(isset($_POST['txtcolor'])) {
 ?>
 
 <div id="settingbox">
+	<form method="post">
 	<h1>Settings</h1>
 	<hr>
-	<p>Text color:</p>
 	<?php
-	$query="SELECT `txtcolor`,`bckcolor` from `chat`.`users` where username='".$_SESSION['username']."';";
+	$query="SELECT `txtcolor`,`bckcolor`,`seemove` from `chat`.`users` where username='".$_SESSION['username']."';";
 	$queryresult=mysqli_fetch_row(mysqli_query($conn,$query));
-	echo '	<form method="post">
-			<ul style="list-style-type: none;"><li>Foreground:
-				<input type="color" name="txtcolor" value="#'.$queryresult[0].'">
-			</li><br><li>Background:
-				<input type="color" name="bckcolor" value="#'.$queryresult[1].'">
-			</li><br><li>
-				<input type="submit" value="change">
-				<input type="submit" name="reset" value="reset">
-			</li></li>
-		</form>
+	$seemove='';
+	if($queryresult[2]==1) {
+		$seemove='checked';
+	}
+	echo '
+		<div>
+			Text color:<br>
+			Foreground:<input type="color" name="txtcolor" value="#'.$queryresult[0].'" id="txtcolor">
+			Background:<input type="color" name="bckcolor" value="#'.$queryresult[1].'" is="bckcolor"><br><br>
+			Left/Joined messages visible: <input type="checkbox" name="leftjoinvisible" '.$seemove.'>
+		</div>
 	'; ?>
+	<input type="submit" value="Save" style="float:right; width:50px; height: 37px; border-radius:0px;">
+	</form>
 </div>

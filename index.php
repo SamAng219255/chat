@@ -124,7 +124,9 @@
 		</div>
 		<script>
 			function stillhere() {
-				$.post('stillalive.php', {page:<?php echo $get ?>,room:<?php echo addslashes($getroom) ?>}, function(data){if(data!="") {console.log(data)}});
+				if(seen) {
+					$.post('stillalive.php', {page:<?php echo $get ?>,room:<?php echo addslashes($getroom) ?>}, function(data){if(data!="") {console.log(data)}});
+				}
 			}
 			setInterval(stillhere,500);
 		</script>

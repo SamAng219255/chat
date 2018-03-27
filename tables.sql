@@ -14,6 +14,7 @@ CREATE TABLE `users` (
   `lastactive` int(16) NOT NULL DEFAULT '-1',
   `prefix` varchar(16) NOT NULL DEFAULT '',
   `suffix` varchar(16) NOT NULL DEFAULT '',
+  `seemove` BOOLEAN NOT NULL DEFAULT TRUE,
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -62,6 +63,8 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
 
     SET i=0;
 
+    SET n=n+1;
+
     WHILE i<n DO
 
         IF EXISTS(SELECT `id` FROM `users` WHERE `id`=i) THEN
@@ -109,8 +112,12 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
 END$$
 DELIMITER ;
 
-CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 2 SECOND STARTS '2018-03-26 09:36:34' ON COMPLETION NOT PRESERVE ENABLE DO CALL detectMove();
+CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 1 SECOND STARTS '2018-03-26 09:36:34' ON COMPLETION NOT PRESERVE ENABLE DO CALL detectMove();
 SET GLOBAL event_scheduler = ON;
 
 GRANT ALL PRIVILEGES ON `chat`.* TO `chatter`@`localhost` IDENTIFIED BY 'GeArᛈᚨᛊᚹᚱᛥ';
 GRANT ALL PRIVILEGES ON `chat`.* TO `chatadmin`@`localhost` IDENTIFIED BY 'autologicalis' WITH GRANT OPTION;
+
+INSERT INTO `chat`.`users` (`id`,`username`,`password`,`quirks`,`pending`,`ip`) VALUES (0,'INFO','no','E','','');
+INSERT INTO `chat`.`users` (`id`,`username`,`password`,`quirks`,`pending`,`ip`) VALUES (0,'join','no','E','','');
+INSERT INTO `chat`.`users` (`id`,`username`,`password`,`quirks`,`pending`,`ip`) VALUES (0,'left','no','E','','');

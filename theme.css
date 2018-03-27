@@ -311,3 +311,5 @@ ul.large div.p {
 ::-webkit-scrollbar { 
     display: none; 
 }
+p[user="join"] {font-size:10pt;}
+p[user="left"] {font-size:10pt;}
