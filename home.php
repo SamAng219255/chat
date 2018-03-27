@@ -3,12 +3,18 @@
 
 <title>General Chat</title>
 
-<style id="userlinestyles"></style>
+<style id="userlinestyles"><?php
+require 'db.php';
+$sightquery="SELECT `seemove`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+$cansee=mysqli_fetch_row(mysqli_query($conn,$sightquery));
+if($cansee[0]==1) {
+	echo 'p[user="join"] {visibility:visible; height:0px} p[user="left"] {visibility:visible; height:0px}';
+}
+?></style>
 
 <div id="chatpicker">
 <a href="./?p=general">General</a>
 <?php
-	require 'db.php';
 	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
 	$queryresult=mysqli_query($conn,$query);
 	if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
