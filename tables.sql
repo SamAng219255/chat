@@ -45,7 +45,7 @@ CREATE TABLE `privchatroom` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELIMITER $$
-CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
+CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` () BEGIN
 
     DECLARE u varchar(16) DEFAULT "";
 
@@ -62,7 +62,7 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
     SELECT MAX(id) FROM `chat`.`users` INTO n;
 
     SET i=0;
-
+    
     SET n=n+1;
 
     WHILE i<n DO
@@ -75,11 +75,11 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
 
                 IF old=1 THEN
 
-                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.'));
+                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'left',CONCAT(u,' has left the chat room.'));
 
                 ELSEIF old>1 THEN
 
-                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has left the chat room.'),old);
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'left',CONCAT(u,' has left the chat room.'),old);
 
                 ELSE INSERT INTO `chat`.`errors` (`id`,`data`) VALUES (0,CONCAT('line 18 ',u,' ',new,' ',old));
 
@@ -87,11 +87,11 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
 
                 IF new=1 THEN
 
-                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.'));
+                    INSERT INTO `chat`.`chatroom` (`id`,`username`,`content`) VALUES (0,'join',CONCAT(u,' has joined the chat room.'));
 
                 ELSEIF new>1 THEN
 
-                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'INFO',CONCAT(u,' has joined the chat room.'),new);
+                    INSERT INTO `chat`.`privchatroom` (`id`,`username`,`content`,`room`) VALUES (0,'join',CONCAT(u,' has joined the chat room.'),new);
 
                 ELSE INSERT INTO `chat`.`errors` (`id`,`data`) VALUES (0,CONCAT('line 24 ',u,' ',new,' ',old));
 
@@ -109,7 +109,7 @@ CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` ()  BEGIN
 
     UPDATE `chat`.`users` SET `lastactive`=`active`;
 
-END$$
+END $$
 DELIMITER ;
 
 CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 1 SECOND STARTS '2018-03-26 09:36:34' ON COMPLETION NOT PRESERVE ENABLE DO CALL detectMove();
