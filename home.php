@@ -8,7 +8,7 @@ require 'db.php';
 $sightquery="SELECT `seemove`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
 $cansee=mysqli_fetch_row(mysqli_query($conn,$sightquery));
 if($cansee[0]==1) {
-	echo 'p[user="join"] {visibility:visible; height:0px} p[user="left"] {visibility:visible; height:0px}';
+	echo 'p[user="join"] {visibility:visible; margin-bottom:1em; height:10px} p[user="left"] {visibility:visible; margin-bottom:1em; height:10px}';
 }
 ?></style>
 

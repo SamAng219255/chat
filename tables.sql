@@ -14,7 +14,7 @@ CREATE TABLE `users` (
   `lastactive` int(16) NOT NULL DEFAULT '-1',
   `prefix` varchar(16) NOT NULL DEFAULT '',
   `suffix` varchar(16) NOT NULL DEFAULT '',
-  `seemove` BOOLEAN NOT NULL DEFAULT TRUE,
+  `seemove` BOOLEAN NOT NULL DEFAULT 0,
   `quirks` text NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;

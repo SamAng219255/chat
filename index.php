@@ -124,23 +124,25 @@
 		</div>
 		<script>
 			function stillhere() {
-				if(seen) {
-					$.post('stillalive.php', {page:<?php echo $get ?>,room:<?php echo addslashes($getroom) ?>}, function(data){if(data!="") {console.log(data)}});
-				}
+				$.post('stillalive.php', {page:<?php echo $get ?>,room:<?php echo addslashes($getroom) ?>}, function(data){if(data!="") {console.log(data)}});
 			}
 			setInterval(stillhere,500);
 		</script>
 		<script>
 			seen=true;
 			wrongs=0;
-			$(window).blur(function() {
-				seen=false;
-			});
-			$(window).focus(function() {
-				seen=true;
+			$(function () {
+				$(window).blur(function() {
+					seen=false;
+					console.log("no");
+				});
+				$(window).focus(function() {
+					seen=true;
+					console.log("yes");
+				});
 			});
 			function checkseen() {
-				$.post('actseen.php',{seen:seen},function (data) {if(data!='don\'t') {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>1) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5';}}});
+				$.post('actseen.php',{seen:seen},function (data) {if(data!='don\'t') {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>2) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5';}}});
 			}
 			if(!looping) {
 				setInterval(checkseen,500);

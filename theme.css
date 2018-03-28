@@ -311,5 +311,5 @@ ul.large div.p {
 ::-webkit-scrollbar { 
     display: none; 
 }
-p[user="join"] {font-size:10pt; visibility:hidden; margin-bottom:-2em}
-p[user="left"] {font-size:10pt; visibility:hidden; margin-bottom:-2em}
+p[user="join"] {font-size:10pt; visibility:hidden; margin-bottom:-1em; height:0px}
+p[user="left"] {font-size:10pt; visibility:hidden; margin-bottom:-1em; height:0px}
