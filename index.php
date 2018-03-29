@@ -62,11 +62,20 @@
 					if(isset($_GET['p'])) {
 						$page=$_GET['p'];
 					}
-					if($page=='browse') {
+					if($page=='setting') {
+						$get=11;
+					}
+					elseif($page=='browse') {
 						$get=10;
 					}
 					elseif($page=='chat') {
 						$get=8;
+					}
+					elseif($page=='settings' && $_GET['place']=='replace') {
+						$get=11;
+					}
+					elseif($page=='settings') {
+						$get=7;
 					}
 					elseif($page=='general') {
 						$get=2;
@@ -114,6 +123,9 @@
 					break;
 					case 10:
 					require 'chatrooms.php';
+					break;
+					case 11:
+					require 'quirks.php';
 					break;
 				}
 				$getroom=0;
