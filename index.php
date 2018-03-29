@@ -4,6 +4,10 @@
 
 <html>
 	<head>
+		<?php $whoisit=$_SERVER['REMOTE_ADDR'];
+                if($whoisit=='10.183.2.4') {
+                        echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+                } ?>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="theme.css">
 		<script>
