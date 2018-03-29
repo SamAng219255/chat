@@ -1,4 +1,6 @@
-<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?page=7">';};?>
+<?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php') {echo '<meta http-equiv="refresh" content="0; URL=./?p=settings">';};?>
+
+<title>Settings</title>
 
 <?php
 
@@ -36,7 +38,8 @@ if(isset($_POST['txtcolor'])) {
 			Text color:<br>
 			Foreground:<input type="color" name="txtcolor" value="#'.$queryresult[0].'" id="txtcolor">
 			Background:<input type="color" name="bckcolor" value="#'.$queryresult[1].'" is="bckcolor"><br><br>
-			Left/Joined messages visible: <input type="checkbox" name="leftjoinvisible" '.$seemove.'>
+			Left/Joined messages visible: <input type="checkbox" name="leftjoinvisible" '.$seemove.'><br><br><br><br>
+			<a href="./?p=settings&place=replace"><button>Text Replace Settings</button></a>
 		</div>
 	'; ?>
 	<input type="submit" value="Save" style="float:right; width:50px; height: 37px; border-radius:0px;">
