@@ -38,10 +38,10 @@ if(isset($_POST['txtcolor'])) {
 			Text color:<br>
 			Foreground:<input type="color" name="txtcolor" value="#'.$queryresult[0].'" id="txtcolor">
 			Background:<input type="color" name="bckcolor" value="#'.$queryresult[1].'" is="bckcolor"><br><br>
-			Left/Joined messages visible: <input type="checkbox" name="leftjoinvisible" '.$seemove.'><br><br><br><br>
-			<a href="./?p=settings&place=replace"><button>Text Replace Settings</button></a>
+			<!--Left/Joined messages visible: <input type="checkbox" name="leftjoinvisible" '.$seemove.'><br><br>--><br><br>
 		</div>
 	'; ?>
 	<input type="submit" value="Save" style="float:right; width:50px; height: 37px; border-radius:0px;">
 	</form>
+	<form><input type="hidden" value="settings" name="p"><input type="hidden" value="replace" name="place"><input type="submit" value="Text Replace Settings"></form>
 </div>

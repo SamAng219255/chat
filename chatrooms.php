@@ -4,12 +4,13 @@
 <title>Browse Chat Rooms</title>
 
 <div id="settingbox">
-<h1>Chat Rooms</h1>
+<h1>Browse Chat Rooms</h1>
 <hr>
 <ul class="large">
 <?php
 
 require 'db.php';
+$foundrooms=0;
 $query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
 $queryresult=mysqli_query($conn,$query);
 if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
@@ -27,8 +28,14 @@ if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 				$lockmode="locked";
 			}
 			echo '<div class="lockmode '.$lockmode.'"></div></li></a>';
+			$foundrooms++;
 		}
 	}
+}
+if($foundrooms<1) {
+	echo '<p>There are no public chatrooms that you aren\'t already in.</p>';
+	echo '<p>You can see the chatrooms you are in from the general chat page or any chatroom page.</p>';
+	echo '<p>You can create a new chatroom from the same place.</p>';
 }}
 else {
 	echo '<p>There are no chatrooms.</p>';

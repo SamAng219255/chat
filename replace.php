@@ -7,7 +7,7 @@ function replacechat($txt,$pattern) {
 	for($i=0; $i<$patternslen; $i++) {
 		$current=explode(json_decode('"\u001D"'), $patterns[$i]);
 		if(count($current)>1) {
-			$text=str_replace($current[0], $current[1], $text);
+			$text=str_ireplace($current[0], $current[1], $text);
 		}
 	}
 	return $text;

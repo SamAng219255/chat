@@ -292,6 +292,17 @@ ul.large div.p {
 .lockmode.unlocked {
 	background-image: url("./img/lock_open.png");
 }
+.patrow {
+	margin-bottom: 1em;
+}
+.bttn {
+	display: inline-block;
+	margin: 2px;
+	background-color: #661D94;
+	color: #000000;
+	padding: 2px;
+	cursor: pointer;
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;

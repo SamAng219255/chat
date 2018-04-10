@@ -9,15 +9,15 @@ require 'db.php';
 if(isset($_POST['patnum'])) {
 	$total="";
 	$first=1;
-	for($i=0; $i<$_POST['patnum']; $i++) {
-		if($_POST['patone'.i]!='') {
-			if($first==1) {
+	for($i=1; $i<=$_POST['patnum']; $i++) {
+		if($_POST['pattwo'.$i]!='') {
+			if($first==0) {
 				$total.=json_decode('"\u001F"');
-				$first=0;
 			}
-			$total.=$_POST['patone'.i];
+			$first=0;
+			$total.=$_POST['patone'.$i];
 			$total.=json_decode('"\u001D"');
-			$total.=$_POST['pattwo'.i];
+			$total.=$_POST['pattwo'.$i];
 		}
 	}
 	$sql="UPDATE `chat`.`users` SET quirks='".addslashes($total)."' WHERE username='".$_SESSION['username']."';";
@@ -27,9 +27,9 @@ if(isset($_POST['patnum'])) {
 ?>
 
 <div id="settingbox">
-	<form method="post">
 	<h1>Settings</h1>
 	<hr>
+	<form method="post">
 	<div id="rows">
 		<?php
 			$query="SELECT `quirks` from `chat`.`users` where username='".$_SESSION['username']."';";
@@ -37,29 +37,33 @@ if(isset($_POST['patnum'])) {
 			$patterns=explode(json_decode('"\u001F"'), $queryresult);
 			$patternslen=count($patterns);
 			echo '<input type="hidden" value="'.$patternslen.'" id="patnum" name="patnum">';
-			for($i=0; $i<$patternslen; $i++) {
-				$current=explode(json_decode('"\u001D"'), $patterns[$i]);
+			for($i=1; $i<=$patternslen; $i++) {
+				$current=explode(json_decode('"\u001D"'), $patterns[$i-1]);
 				if(count($current)>1) {
-					echo '<div id="pat'.$i.'"><input type="text" value="'.$current[0].'" name="patone'.$i.'">=<input type="text" value="'.$current[1].'" name="pattwo'.$i.'"></div><br>';
+					echo '<div id="pat'.$i.'" class="patrow"><input type="text" value="'.$current[0].'" name="patone'.$i.'">=<input type="text" value="'.$current[1].'" name="pattwo'.$i.'"></div>';
 				}
 			}
-			echo '<div id="pat'.$patternslen.'"><input type="text" name="patone'.$patternslen.'">=<input type="text" name="pattwo'.$patternslen.'"></div><br>';
+			$patternslen++;
+			echo '<div id="pat'.$patternslen.'" class="patrow"><input type="text" name="patone'.$patternslen.'">=<input type="text" name="pattwo'.$patternslen.'"></div>';
 			
 		?>
 	</div>
-	<button onclick="addrow()">Add</button>
-	<button onclick="removerow()">Remove</button>
+	<div onclick="addrow()" class="bttn noselect">Add</div>
+	<div onclick="removerow()" class="bttn noselect">Remove</div>
 	<input type="submit" value="Save" style="float:right; width:50px; height: 37px; border-radius:0px;">
 	</form>
 	<script>
 		patternslen=parseInt(document.getElementById("patnum").value);
+		patternslen+=2;
 		function addrow() {
-			$("#rows").append('<div id="pat'.patternslen.'"><input type="text" name="patone'.patternslen.'">=<input type="text" name="pattwo'.patternslen.'"></div><br>');
+			$("#rows").append('<div id="pat'+patternslen+'" class="patrow"><input type="text" name="patone'+patternslen+'">=<input type="text" name="pattwo'+patternslen+'"></div>');
 			patternslen++;
+			document.getElementById("patnum").value=patternslen;
 		}
 		function removerow() {
 			patternslen--;
 			$("#pat"+patternslen).remove();
+			document.getElementById("patnum").value=patternslen;
 		}
 	</script>
 </div>

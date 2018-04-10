@@ -38,14 +38,14 @@
 		<div id="topbar">
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<a href="./?p=general">General Chat</a>&nbsp;&nbsp&nbsp;
-			<a href="./?p=browse">Chat Rooms</a>
+			<a href="./?p=browse">Browse Chat Rooms</a>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
 				<?php
 					if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 						echo 'Signed in as: <br>'.$_SESSION['username'];
 						echo '<a href="./?page=5">Log Out</a>';
-						echo '<a href="./?page=7">Settings</a>';
+						echo '<a href="./?p=settings">Settings</a>';
 					}
 					else {
 						echo 'Not signed in.';

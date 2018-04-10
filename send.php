@@ -3,17 +3,21 @@
 
 <?php
 
-session_start();
+if(session_status() == PHP_SESSION_NONE) {
+	session_start();
+}
 
 require 'replace.php';
 
 //var_dump($_POST);
 //echo "<br>";
 
+
+
 require 'db.php';
 $text=$_POST['text'];
 $quirkquery="SELECT `quirks`,`username` from `chat`.`users` where username='".$_SESSION['username']."'";
-$quirk=mysqli_fetch_row(mysqli_query($conn,$query))[0];
+$quirk=mysqli_fetch_row(mysqli_query($conn,$quirkquery))[0];
 $text=replacechat($text,$quirk);
 $text=addslashes($text);
 $srnm=addslashes($_SESSION['username']);

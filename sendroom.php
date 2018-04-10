@@ -7,15 +7,12 @@
 //var_dump($_POST);
 //echo "<br>";
 
+require 'replace.php';
 require 'db.php';
 $text=$_POST['text'];
-/*$query="SELECT `quirks` from `chat`.`users` where username='".$_SESSION['username']."'";
-echo $query.'<br>';
-$quirk=mysqli_fetch_row(mysqli_query($conn,$query))[0];
-echo $text."<br>";
-$text=shell_exec("./quirks \"".$text."\" \"".$quirk."\"");
-echo "./quirks '".$text."' '".$quirk."'<br>";
-echo $text.'<br>';*/
+$quirkquery="SELECT `quirks`,`username` from `chat`.`users` where username='".$_SESSION['username']."'";
+$quirk=mysqli_fetch_row(mysqli_query($conn,$quirkquery))[0];
+$text=replacechat($text,$quirk);
 $text=addslashes($text);
 $srnm=addslashes($_POST['username']);
 if(trim($text)!="") {
