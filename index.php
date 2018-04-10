@@ -6,7 +6,8 @@
 	<head>
 		<?php $whoisit=$_SERVER['REMOTE_ADDR'];
                 if($whoisit=='10.183.2.3') {
-                        echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+                        //echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+			echo '<script>alert("Hello Micah...")</script>';
                 } ?>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="theme.css">
@@ -37,8 +38,16 @@
 		<script>looping=false;</script>
 		<div id="topbar">
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
-			<a href="./?p=general">General Chat</a>&nbsp;&nbsp&nbsp;
-			<a href="./?p=browse">Browse Chat Rooms</a>
+			<?php
+				if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+					echo '<a href="./?p=general">General Chat</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=browse">Browse Chat Rooms</a>';
+				}
+				else {
+					echo '<a href="./?p=login">General Chat</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=login">Browse Chat Rooms</a>';
+				}
+			?>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
 				<?php
