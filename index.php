@@ -40,12 +40,14 @@
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<?php
 				if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
-					echo '<a href="./?p=general">General Chat</a>&nbsp;&nbsp&nbsp;';
-					echo '<a href="./?p=browse">Browse Chat Rooms</a>';
+					echo '<a href="./?p=general">Chat</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=browse">Browse</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=users">Users</a>';
 				}
 				else {
-					echo '<a href="./?p=login">General Chat</a>&nbsp;&nbsp&nbsp;';
-					echo '<a href="./?p=login">Browse Chat Rooms</a>';
+					echo '<a href="./?p=login">Chat</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=login">Browse</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=login">Users</a>';
 				}
 			?>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
@@ -75,7 +77,10 @@
 					if(isset($_GET['p'])) {
 						$page=$_GET['p'];
 					}
-					if($page=='setting') {
+					if($page=='users') {
+						$get=12;
+					}
+					elseif($page=='setting') {
 						$get=11;
 					}
 					elseif($page=='browse') {
@@ -139,6 +144,9 @@
 					break;
 					case 11:
 					require 'quirks.php';
+					break;
+					case 12:
+					require 'users.php';
 					break;
 				}
 				$getroom=0;
