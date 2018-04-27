@@ -31,14 +31,24 @@
 	Password:<br>
 	<input type="password" name="password" required maxlength=16 autocomplete="current-password"><br>
 	<input type="submit" value="Login"><br>
+	<?php
+		if(isset($_GET["target"])) {
+			echo '<input type="hidden" name="target" value="'.$_GET["target"].'"><br>';
+		}
+	?>
 </form></div>
 <div id="rcp" class="cp"><form class="loginform" action="./?page=4" method="post">
-        Username:<br>
-        <?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.addslashes($srnm).'" required maxlength=16 autocomplete="username" pattern="([A-Za-z0-9_\-*ᚠ-᛭<>@])+" title="Can only can letters, numbers, underscores, hyphens, asterisks, greater/less than signs, @ signs, and runes.">'; ?><br>
-        Password:<br>
-        <input type="password" name="password" required maxlength=16 autocomplete="new-password"><br>
-        Retype Password:<br>
-        <input type="password" name="password2" required maxlength=16 autocomplete="new-password"><br>
-        <input type="submit" value="Register"><br>
+	Username:<br>
+	<?php $srnm=''; if(isset($_GET['username'])) { $srnm=$_GET['username']; } echo '<input type="text" name="username" value="'.addslashes($srnm).'" required maxlength=16 autocomplete="username" pattern="([A-Za-z0-9_\-*ᚠ-᛭<>@])+" title="Can only can letters, numbers, underscores, hyphens, asterisks, greater/less than signs, @ signs, and runes.">'; ?><br>
+	Password:<br>
+	<input type="password" name="password" required maxlength=16 autocomplete="new-password"><br>
+	Retype Password:<br>
+	<input type="password" name="password2" required maxlength=16 autocomplete="new-password"><br>
+	<input type="submit" value="Register"><br>
+	<?php
+		if(isset($_GET["target"])) {
+			echo '<input type="hidden" name="target" value="'.$_GET["target"].'"><br>';
+		}
+	?>
 </form></div>
 </div>

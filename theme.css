@@ -173,6 +173,7 @@ a {
         background-color: #2C0047;
         position: relative;
         overflow: hidden;
+				overflow-y: auto;
 }
 #chatpicker a {
         display: block;
@@ -185,7 +186,7 @@ a {
 	cursor: pointer;
 }
 #chatpicker a:hover {
-        background-color:rgba(255,255,255,0.5);
+  background-color:rgba(255,255,255,0.5);
 	color:#2C0047;
 }
 #settingbox {
@@ -319,8 +320,11 @@ ul.large div.p {
 #username {
 	position:absolute;
 }
-::-webkit-scrollbar { 
-    display: none; 
+::scrollbar {
+    display: none;
+}
+::-webkit-scrollbar {
+    display: none;
 }
 p[user="join"] {font-size:10pt; visibility:hidden; margin-bottom:-1em; height:0px}
 p[user="left"] {font-size:10pt; visibility:hidden; margin-bottom:-1em; height:0px}

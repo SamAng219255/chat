@@ -45,9 +45,9 @@
 					echo '<a href="./?p=users">Users</a>';
 				}
 				else {
-					echo '<a href="./?p=login">Chat</a>&nbsp;&nbsp&nbsp;';
-					echo '<a href="./?p=login">Browse</a>&nbsp;&nbsp&nbsp;';
-					echo '<a href="./?p=login">Users</a>';
+					echo '<a href="./?p=login&target=general">Chat</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=login&target=browse">Browse</a>&nbsp;&nbsp&nbsp;';
+					echo '<a href="./?p=login&target=users">Users</a>';
 				}
 			?>
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
@@ -77,8 +77,11 @@
 					if(isset($_GET['p'])) {
 						$page=$_GET['p'];
 					}
-					if($page=='users') {
+					if($page=='users' && isset($_GET['user'])) {
 						$get=12;
+					}
+					elseif($page=='users') {
+						$get=13;
 					}
 					elseif($page=='setting') {
 						$get=11;
@@ -146,6 +149,9 @@
 					require 'quirks.php';
 					break;
 					case 12:
+					require 'userchat.php';
+					break;
+					case 13:
 					require 'users.php';
 					break;
 				}
@@ -161,6 +167,7 @@
 			}
 			setInterval(stillhere,500);
 		</script>
+		<?php echo "<script>crntpg='".$_GET["p"]."';</script>"; ?>
 		<script>
 			seen=true;
 			wrongs=0;
@@ -175,7 +182,7 @@
 				});
 			});
 			function checkseen() {
-				$.post('actseen.php',{seen:seen},function (data) {if(data!='don\'t') {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>2) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5';}}});
+				$.post('actseen.php',{seen:seen},function (data) {if(data!='don\'t') {if(data=='wrong'){wrongs+=2} if(wrongs>0){wrongs--} if(wrongs>2) {$.post('actseen.php',{seen:!seen}),function(){}; window.location='./?page=5&target='+crntpg;}}});
 			}
 			if(!looping) {
 				setInterval(checkseen,500);

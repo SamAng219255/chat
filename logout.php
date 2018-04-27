@@ -3,5 +3,5 @@
 <?php
 $_SESSION['loggedin']='no';
 $_SEESION['username']='Not Signed In';
+echo '<meta http-equiv="refresh" content="0; URL=./?p=login&target='.$_GET["target"].'">';
 ?>
-<meta http-equiv="refresh" content="0; URL=./?p=login">

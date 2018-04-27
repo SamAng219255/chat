@@ -3,12 +3,9 @@
 
 <title>Users</title>
 
-<style id="userlinestyles">
 <?php
 	require 'db.php';
-	
 ?>
-</style>
 
 <div id="chatpicker">
 	<a href="./?p=users">Home</a>
