@@ -28,9 +28,19 @@ else {
 }
 
 ?>
+	<li>
+		<div class="h3">Start New Conversation</div>
+		<div class="p">Enter Their Username:<input type="text" id="newchat" onkeypress="return candleManu27s(event)"><input type="submit" value="Start!" onclick="if($('#newchat').val()!='') {window.location='./?p=users&user='+$('#newchat').val()}"></div>
+	</li>
 </ul>
 </div>
-
+<script>
+function candleManu27s(e) {
+	if(e.which==13||e.keyCode==13) {
+		if($('#newchat').val()!='') {window.location='./?p=users&user='+$('#newchat').val()}
+	}
+}
+</script>
 <script>
 	offset=parseInt($(settingbox).css('padding-top').split('px')[0])+parseInt($(settingbox).css('padding-bottom').split('px')[0])+30;
 	document.getElementById("stuff").style="height: "+(window.innerHeight-stuff.offsetTop-offset);
