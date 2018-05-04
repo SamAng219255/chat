@@ -8,7 +8,6 @@
 ?>
 
 <div id="chatpicker">
-	<a href="./?p=users">Home</a>
 	<?php
 		
 	?>
