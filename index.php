@@ -92,7 +92,7 @@
 					elseif($page=='chat') {
 						$get=8;
 					}
-					elseif($page=='settings' && $_GET['place']=='replace') {
+					elseif($page=='settings' && isset($_GET['place']) && $_GET['place']=='replace') {
 						$get=11;
 					}
 					elseif($page=='settings') {
