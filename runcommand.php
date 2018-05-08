@@ -13,7 +13,7 @@ if($command[0]=="/invite") {
 		$row=mysqli_fetch_row($roomqueryresult);
 		if($row[3]<3 || strtolower($row[2])==strtolower($_SESSION['username'])) {
 			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$row[1].json_decode('"\u001D"').strtolower(addslashes($command[1]))."' WHERE `id`=".$_SESSION['room'].";";
-			notify($command[1],'You have been invited to '.$row[4].'.');
+			notify($command[1],'You have been invited to '.$row[4].'.',$conn);
 			if(mysqli_query($conn,$roomsql)) {
 				echo '<p>'.htmlspecialchars($command[1]).' has been added to the chat room.</p>';
 			}
@@ -38,14 +38,14 @@ elseif($command[0]=="/leave") {
 	array_splice($temp,array_search($_SESSION['username'],$temp),1);
 	$newuser="";
 	for($i=0; $i<count($temp); $i++) {
-		if(i>0) {
+		if($i>0) {
 			$newuser.=json_decode('"\u001D"');
 		}
-		$newuser.=$temp[i];
+		$newuser.=$temp[$i];
 	}
-	$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newusers."' WHERE `id`=".$_SESSION['room'].";";
+	$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newuser."' WHERE `id`=".$_SESSION['room'].";";
 	mysqli_query($conn,$roomsql);
-	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
+	echo '<script>window.location="./?p=general";</script>';
 }
 elseif($command[0]=="/kick") {
 	if(count($command)>=2) {
@@ -57,13 +57,13 @@ elseif($command[0]=="/kick") {
 			array_splice($temp,array_search($command[1],$temp),1);
 			$newuser="";
 			for($i=0; $i<count($temp); $i++) {
-			        if(i>0) {
+			        if($i>0) {
 					$newuser.=json_decode('"\u001D"');
 				}
-				$newuser.=$temp[i];
+				$newuser.=$temp[$i];
 			}
-			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newusers."' WHERE `id`=".$_SESSION['room'].";";
-			notify($command[1],'<script>window.location="./?p=general";</script>');
+			$roomsql="UPDATE `chat`.`chatrooms` SET `users`='".$newuser."' WHERE `id`=".$_SESSION['room'].";";
+			notify($command[1],'<script>window.location="./?p=general";</script>',$conn);
 			if(mysqli_query($conn,$roomsql)) {
 				echo '<p>'.htmlspecialchars($command[1]).' has been removed from the chat room.</p>';
 			}
