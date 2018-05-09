@@ -10,8 +10,8 @@
 <?php
 
 require 'db.php';
-$foundrooms=0;
-$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."');";
+$foundusers=0;
+$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."') AS `table`;";
 $queryresult=mysqli_query($conn,$query);
 if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 	$row=mysqli_fetch_row($queryresult);

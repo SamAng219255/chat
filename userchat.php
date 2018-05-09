@@ -9,25 +9,26 @@ $stylequeryone="SELECT `txtcolor`,`bckcolor`,`username` FROM `chat`.`users` WHER
 $styleone=mysqli_fetch_row(mysqli_query($conn,$stylequeryone));
 $stylequerytwo="SELECT `txtcolor`,`bckcolor`,`username` FROM `chat`.`users` WHERE `username`='".$_GET['user']."';";
 $styletwo=mysqli_fetch_row(mysqli_query($conn,$stylequerytwo));
-echo 'p[user="'.$styleone[2].'"] {color:#'.$styleone[0].';background-color:#'.$styleone[1].';}';
-echo 'p[user="'.$styletwo[2].'"] {color:#'.$styletwo[0].';background-color:#'.$styletwo[1].';}';
+echo 'p[user="'.strtolower($styleone[2]).'"] {color:#'.$styleone[0].';background-color:#'.$styleone[1].';}';
+echo 'p[user="'.strtolower($styletwo[2]).'"] {color:#'.$styletwo[0].';background-color:#'.$styletwo[1].';}';
 ?></style>
 
 <div id="chatpicker">
 	<?php
-		$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."');";
+		$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."') AS `table`;";
 		$queryresult=mysqli_query($conn,$query);
 		if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
 			echo '<a href="./?p=users&user='.$row[0].'">'.$row[0].'</a>';
 		}}
 	?>
+	<a onclick="document.getElementById('darken').style='visibility:visible;'; document.getElementById('adduserchat').style='visibility:visible;';">Chat With Another User</a>
 </div>
 
 <div id="room">
 	<div id="textarea">
 		<?php
-			$query="SELECT DISTINCT * FROM (SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' ORDER BY id DESC LIMIT 256 UNION SELECT * FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."' ORDER BY id DESC LIMIT 256) AS `table` ORDER by id ASC";;";
+			$query="SELECT DISTINCT * FROM ( SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' AND `recipient`='".$_GET['user']."' UNION SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_GET['user']."' AND `recipient`='".$_SESSION['username']."' ORDER BY id DESC LIMIT 256 ) AS `table` ORDER by id ASC";
 			$queryresult=mysqli_query($conn,$query);
 			//var_dump($queryresult);
 			//echo '<br>';
@@ -37,7 +38,7 @@ echo 'p[user="'.$styletwo[2].'"] {color:#'.$styletwo[0].';background-color:#'.$s
 			if($queryresult && $queryresult->num_rows>0) {
 				for($i=0; $i<$queryresult->num_rows; $i++) {
 					$row=mysqli_fetch_row($queryresult);
-					$temptime=explode(" ",$row[3]);
+					$temptime=explode(" ",$row[4]);
 					$timesent=$temptime[0];
 					if($temptime[0]==date('Y-m-d')) {
 						$timesent=$temptime[1];
@@ -92,11 +93,9 @@ if(isset($_POST['text'])) {
 	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }
 ?>
-<!--pickup from here!-->
-<!------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+<?php echo '<script>recipient="'.$_GET['user'].'"</script>' ?>
 <script>
 lstmsg=parseInt(document.getElementById("lastmsg").innerHTML);
-srnm=document.getElementById("username").innerHTML;
 function updatechatbox() {
 	checkseen();
 	$.post('kickbad.php',{},function(data) {
@@ -104,7 +103,7 @@ function updatechatbox() {
 			document.location="?p=login";
 		}
 	});
-	$.post('pageupdate.php', {last: lstmsg}, function(data) {
+	$.post('userpageupdate.php', {last: lstmsg, recipient: recipient}, function(data) {
 		console.log(data);
 		var atbottom=element.scrollTop >= (element.scrollHeight - element.offsetHeight);
 		//console.log(data);
@@ -112,11 +111,6 @@ function updatechatbox() {
 		if(lstmsg<0 && typeof foo[1] != "undefined") {
 			$('div#textarea').text("");
 		}
-		$.post('getnewstyles.php', {userlist: document.getElementById("visibleusers").innerHTML, lstmsg: lstmsg}, function(data) {
-			var bar=data.split(/\u001C(.+)/);
-			$('style#userlinestyles').append(bar[0]);
-			$('div#visibleusers').append(bar[1]);
-		});
 		if(!isNaN(foo[0])) {
 			lstmsg=parseInt(foo[0]);
 		}
@@ -130,7 +124,7 @@ looping=true;
 updateIntervalId=setInterval(updatechatbox,500);
 function submittxt() {
 	var txt = $('input#typing').val();
-	$.post('send.php', {text: txt, username: srnm}, function(data) {
+	$.post('usersend.php', {text: txt, recipient: recipient}, function(data) {
 		console.log(data);
 		document.getElementById('typing').value="";
 	});
@@ -142,43 +136,23 @@ function candleManu27s(e) {
 }
 </script>
 
-<div id="darken" class="grayout" onclick="hideCreateRoom()"></div>
-<div id="createroom" class="cntscr">
-	<div class="closebutton" onclick="hideCreateRoom()"></div>
-	<form action="./?page=9" method="post" class="cntscrform" class="cntscrform">
+<div id="darken" class="grayout" onclick="hideadduserchat()"></div>
+<div id="adduserchat" class="cntscr">
+	<div class="closebutton" onclick="hideadduserchat()"></div>
+	<form method="get" class="cntscrform" class="cntscrform">
 		<div id="makeroomoptions">
-		Chat Room Name:
-		<input type="text" max-length=32 required name="name"><br><br>
-		Join Restriction Level:
-		<select name="joinrestriction" onchange="togglepasscode(this.value)" id="joinrestriction">
-			<option value="0">Anyone Can Join.</option>
-			<option value="1">Anyone Can Join with Passcode.</option>
-			<option value="2">User Invitation Required.</option>
-			<option value="3">Owner Invitation Required.</option>
-		</select><br><br>
+		<input type="hidden" name="p" value="users">
+		Other User's Name:
+		<input type="text" max-length=16 required name="user"><br><br>
 		</div>
-		<input type="submit" value="Create">
+		<input type="submit" value="Open Chat">
 	</form>
-	<script>
-	function togglepasscode(val) {
-		if(document.getElementById("passcodefield")!=null) {
-			if(val!=1) {
-				document.getElementById("makeroomoptions").removeChild(document.getElementById("passcodefield"));
-			}
-		}
-		else {
-			if(val==1) {
-				$('div#makeroomoptions').append('<div id="passcodefield">Passcode:<input type="text" name="passcode" max-length=16 required><br><br></div>');
-			}
-		}
-	}
-	</script>
 </div>
 
 <script>
-function hideCreateRoom() {
+function hideadduserchat() {
 	document.getElementById('darken').style='visibility:hidden;';
-	document.getElementById('createroom').style='visibility:hidden;';
+	document.getElementById('adduserchat').style='visibility:hidden;';
 }
 </script>
 
