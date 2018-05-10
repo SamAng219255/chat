@@ -8,6 +8,7 @@ if(session_status() == PHP_SESSION_NONE) {
 }
 
 require 'replace.php';
+require 'notify.php';
 
 //var_dump($_POST);
 //echo "<br>";
