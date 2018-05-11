@@ -16,6 +16,7 @@ CREATE TABLE `users` (
   `suffix` varchar(16) NOT NULL DEFAULT '',
   `seemove` BOOLEAN NOT NULL DEFAULT 0,
   `quirks` text NOT NULL,
+  `pendingpms` varchar(256) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `chatroom` (

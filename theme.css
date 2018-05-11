@@ -28,6 +28,8 @@ a {
 	font-family:Helvetica;
 	font-size:20pt;
 	height:40px;
+	z-index: 2;
+	position: relative;
 }
 #topbar a {
 	color:#661D94;
@@ -77,6 +79,35 @@ a {
 	background-color: rgba(179,216,141,0);
 	background-image: url(./img/profile.png);
 	background-size: 70px;
+}
+#noteicon {
+	float:right;
+	height:70px;
+	margin: -35px 5px 5px 5px;
+	width: 70px;
+	border-radius:10px;
+	background-color: rgba(179,216,141,0);
+	background-image: url(./img/bell.png);
+	background-size: 70px;
+}
+#noteicon:hover {
+	background-color: rgba(255,255,255,0.5);
+}
+#noteicon:active {
+	background-color: rgba(255,255,255,0.75);
+}
+#noteslist {
+	visibility:hidden;
+	position: relative;
+	top: 100%;
+	left: -75px;
+	padding:10px 0px;
+	width:150px;
+	background-color:#2C0047;
+	text-align:left;
+	color:#661D94;
+	font-size: 14pt;
+	z-index: 100;
 }
 #profileicon:hover {
 	background-color: rgba(255,255,255,0.5);
@@ -206,6 +237,27 @@ hr {
 }
 #settingbox ul li form {
 	display:inline-block;
+}
+#banner {
+	z-index:1;
+	position:absolute;
+	width:80%;
+	padding: 0px 10%;
+	height:40px;
+	left:0px;
+	top:40px;
+	background-color: #AF33FF;
+	color:#1A1E06;
+	font-family: Helvetica;
+	font-size: 25px;
+	animation-name: slidethroughview;
+	animation-duration: 4s;
+}
+@keyframes slidethroughview{
+	0%	{top:40px;}
+	33%	{top:80px;}
+	67%	{top:80px;}
+	100%	{top:40px;}
 }
 .grayout {
 	position: absolute;

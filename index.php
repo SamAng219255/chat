@@ -31,11 +31,51 @@
                                 profileShown=false;
                         }
 			}
+			notesShown=false;
+			function showNotes() {
+				document.getElementById("noteslist").style="visibility:visible;";
+				notesShown=true;
+			}
+			function hideNotes() {
+				document.getElementById("noteslist").style="visibility:hidden;";
+				notesShown=false;
+			}
+			function toggleNotes() {
+				if(!notesShown) {
+					document.getElementById("noteslist").style="visibility:visible;";
+					notesShown=true;
+				}
+				else {
+					document.getElementById("noteslist").style="visibility:hidden;";
+					notesShown=false;
+				}
+			}
 		</script>
 		<script src="jquery.js"></script>
 	</head>
 	<body>
 		<script>looping=false;</script>
+		<?php
+			require 'db.php';
+			$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+			$pmsqueryresult=mysqli_query($conn,$pmsquery);
+			$pmsrow=mysqli_fetch_row($pmsqueryresult);
+			$pmslist=explode(json_decode('"\u001D"'),$pmsrow[0]);
+			if(count($pmslist)>1) {
+				echo '<div id="banner">';
+				$extras=" has";
+				if(count($pmslist)>3) {
+					$extras=", and ".(count($pmslist)-2)." other people, have";
+				}
+				elseif (count($pmslist)==3) {
+					$extras=", and 1 other person, have";
+				}
+				echo $pmslist[0].$extras.' sent you a message';
+				echo '</div>';
+			}
+			$pmssql="UPDATE `chat`.`users` SET `pendingpms`='' WHERE `username`='".$_SESSION["username"]."';";
+			mysqli_query($conn,$pmssql);
+		?>
 		<div id="topbar">
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<?php
@@ -64,6 +104,11 @@
 					}
 				?>
 			</div>
+			</div>
+			<div id="noteicon" onclick="toggleNotes();" onmouseleave="hideNotes();" style="visibility:hidden">
+				<div id="noteslist" class="noselect">
+					Nothing here yet.
+				</div>
 			</div>
 		</div>
 		<div id="stuff">

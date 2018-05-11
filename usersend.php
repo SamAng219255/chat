@@ -24,8 +24,19 @@ $text=addslashes($text);
 $srnm=addslashes($_SESSION['username']);
 if(trim($text)!="") {
 	$sql="INSERT INTO `chat`.`userchatroom` (`id`, `username`, `content`,`recipient`) VALUES (0,'".$srnm."','".trim($text)."','".$_POST["recipient"]."')";
-	//echo $sql;
 	var_dump(mysqli_query($conn,$sql));
+	$onlinequery="SELECT `active` FROM `chat`.`users` WHERE `username`='".$_POST["recipient"]."'";
+	$onlinequeryresult=mysqli_fetch_row(mysqli_query($conn,$onlinequery))[0];
+	if($onlinequeryresult<0) {
+		$pendingquery="SELECT `username`,`pendingpms` FROM `chat`.`users` WHERE `username`='".$_POST["recipient"]."';";
+		$pendingqueryresult=mysqli_query($conn,$pendingquery);
+		$pendingrow=mysqli_fetch_row($pendingqueryresult);
+		$pendingpms=$pendingrow[1];
+		if(!in_array($_SESSION['username'],explode(json_decode('"\u001D"'),$pendingpms))) {
+			$pendingsql="UPDATE `chat`.`users` SET `pendingpms`='".$_SESSION['username'].json_decode('"\u001D"').$pendingpms."' WHERE `username`='".$_POST["recipient"]."';";
+			mysqli_query($conn,$pendingsql);
+		}
+	}
 }
 
 $ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
