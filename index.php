@@ -56,25 +56,27 @@
 	<body>
 		<script>looping=false;</script>
 		<?php
-			require 'db.php';
-			$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
-			$pmsqueryresult=mysqli_query($conn,$pmsquery);
-			$pmsrow=mysqli_fetch_row($pmsqueryresult);
-			$pmslist=explode(json_decode('"\u001D"'),$pmsrow[0]);
-			if(count($pmslist)>1) {
-				echo '<div id="banner">';
-				$extras=" has";
-				if(count($pmslist)>3) {
-					$extras=", and ".(count($pmslist)-2)." other people, have";
+			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+				require 'db.php';
+				$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+				$pmsqueryresult=mysqli_query($conn,$pmsquery);
+				$pmsrow=mysqli_fetch_row($pmsqueryresult);
+				$pmslist=explode(json_decode('"\u001D"'),$pmsrow[0]);
+				if(count($pmslist)>1) {
+					echo '<div id="banner">';
+					$extras=" has";
+					if(count($pmslist)>3) {
+						$extras=", and ".(count($pmslist)-2)." other people, have";
+					}
+					elseif (count($pmslist)==3) {
+						$extras=", and 1 other person, have";
+					}
+					echo $pmslist[0].$extras.' sent you a message';
+					echo '</div>';
 				}
-				elseif (count($pmslist)==3) {
-					$extras=", and 1 other person, have";
-				}
-				echo $pmslist[0].$extras.' sent you a message';
-				echo '</div>';
+				$pmssql="UPDATE `chat`.`users` SET `pendingpms`='' WHERE `username`='".$_SESSION["username"]."';";
+				mysqli_query($conn,$pmssql);
 			}
-			$pmssql="UPDATE `chat`.`users` SET `pendingpms`='' WHERE `username`='".$_SESSION["username"]."';";
-			mysqli_query($conn,$pmssql);
 		?>
 		<div id="topbar">
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
