@@ -92,8 +92,7 @@ CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 1 S
 CREATE DEFINER=`chatadmin`@`localhost` EVENT `moveroombot` ON SCHEDULE EVERY 1 SECOND STARTS '2018-03-26 09:36:34' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE `chat`.`users` SET `active`=-1 WHERE TIMESTAMPDIFF(second, `laston`, CURRENT_TIMESTAMP)>1;
 SET GLOBAL event_scheduler = ON;
 
-GRANT ALL PRIVILEGES ON `chat`.* TO `chatter`@`localhost` IDENTIFIED BY 'GeArᛈᚨᛊᚹᚱᛥ';
-GRANT ALL PRIVILEGES ON `chat`.* TO `chatadmin`@`localhost` IDENTIFIED BY 'autologicalis' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON `chat`.* TO `username`@`localhost` IDENTIFIED BY 'password';
 
 INSERT INTO `chat`.`users` (`id`,`username`,`password`,`quirks`,`pending`,`ip`) VALUES (0,'INFO','no','E','','');
 INSERT INTO `chat`.`users` (`id`,`username`,`password`,`quirks`,`pending`,`ip`) VALUES (0,'join','no','E','','');
