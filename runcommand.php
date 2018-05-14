@@ -7,7 +7,7 @@ require 'notify.php';
 $command=explode(" ",$_POST['text']);
 
 $adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
-$isadmin=
+$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]==1;
 
 if($command[0]=="/invite") {
 	if(count($command)>=2) {
@@ -55,7 +55,7 @@ elseif($command[0]=="/kick") {
 		$roomquery="SELECT `id`,`users`,`owner` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
 		$roomqueryresult=mysqli_query($conn,$roomquery);
 		$row=mysqli_fetch_row($roomqueryresult);
-		if(strtolower($row[2])==strtolower($_SESSION['username'])) {
+		if(strtolower($row[2])==strtolower($_SESSION['username']) || $isadmin) {
 			$temp=explode(json_decode('"\u001D"'),$row[1]);
 			array_splice($temp,array_search($command[1],$temp),1);
 			$newuser="";
@@ -75,7 +75,7 @@ elseif($command[0]=="/kick") {
 			}
 		}
 		else {
-			echo '<p>This command can only be used by the owner.</p>';
+			echo '<p>This command can only be used by the room owner.</p>';
 		}
 	}
 	else {
@@ -88,7 +88,7 @@ elseif($command[0]=="/room") {
 		$roomquery="SELECT `id`,`owner` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
 		$roomqueryresult=mysqli_query($conn,$roomquery);
 		$row=mysqli_fetch_row($roomqueryresult);
-		if(strtolower($row[1])==strtolower($_SESSION['username'])) {
+		if(strtolower($row[1])==strtolower($_SESSION['username']) || $isadmin) {
 			if($command[1]=="delete") {
 				$roomsql="UPDATE `chat`.`users` SET `pending`=CONCAT('<script>window.location=\"./?p=general\"</script>".json_decode('"\u001D"')."',`pending`) WHERE `active`=".$_SESSION['room'].";";
 				mysqli_query($conn,$roomsql);
@@ -117,7 +117,7 @@ elseif($command[0]=="/room") {
 			}
 		}
 		else {
-			echo '<p>This command can only be used by the owner.</p>';
+			echo '<p>This command can only be used by the room owner.</p>';
 		}
 	}
 	else {
@@ -126,31 +126,86 @@ elseif($command[0]=="/room") {
 	}
 }
 elseif($command[0]=="/bot") {
-	if(count($command)>=2) {
+	if(count($command)>1) {
 		if($command[1]=="add") {
 			$roomquery="SELECT `id`,`owner` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
 			$roomqueryresult=mysqli_query($conn,$roomquery);
 			$row=mysqli_fetch_row($roomqueryresult);
-			if(strtolower($row[1])==strtolower($_SESSION['username'])) {
-				if() {
-					$sql="INSERT INTO `chat`.`bots` (`id`,`type`,`room`,`data`) VALUES (0,'','','');"
+			if(strtolower($row[1])==strtolower($_SESSION['username']) || $isadmin) {
+				if(count($command)>2) {
+					$sql="INSERT INTO `chat`.`bots` (`id`,`type`,`room`,`data`) VALUES (0,'".$command[2]."','".$_SESSION['room']."','');";
+					if(mysqli_query($conn,$sql)) {
+						echo '<p>'.$command[2].' bot created and given id '.mysqli_insert_id($conn).'</p>';
+					}
+					else {
+						echo '<p>Failed to create bot.</p>';
+					}
 				}
+				else {
+					echo '<p>Not enough arguments given.</p>';
+					echo '<p>Syntax: /bot add &lt;type&gt;</p>';
+				}
+			}
+			else {
+				echo '<p>This command can only be used by the room owner.</p>';
 			}
 		}
 		elseif($command[1]=="remove") {
-
+			$roomquery="SELECT `id`,`owner` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
+			$roomqueryresult=mysqli_query($conn,$roomquery);
+			$row=mysqli_fetch_row($roomqueryresult);
+			if(strtolower($row[1])==strtolower($_SESSION['username']) || $isadmin) {
+				if(count($command)>2) {
+					$sql="DELETE FROM `chat`.`bots` WHERE `id`='".$command[2]."' AND `room`='".$_SESSION['room']."';";
+					if(mysqli_query($conn,$sql)) {
+						echo '<p>Bot deleted.</p>';
+					}
+					else {
+						echo '<p>Failed to delete bot.</p>';
+					}
+				}
+				else {
+					echo '<p>Not enough arguments given.</p>';
+					echo '<p>Syntax: /bot remove &lt;bot id&gt;</p>';
+				}
+			}
+			else {
+				echo '<p>This command can only be used by the room owner.</p>';
+			}
 		}
 		elseif($command[1]=="call") {
-
+			if(count($command)>2) {
+				$query="SELECT `type`,`room` FROM `chat`.`bots` WHERE `id`=".$command[2]." AND `room`='".$_SESSION['room']."';";
+				$queryresult=mysqli_query($conn,$query);
+				if($queryresult && $queryresult->num_rows>0) {
+					$row=mysqli_fetch_row($queryresult);
+					if($row[1]==$_SESSION['room']) {
+						require 'bots.php';
+						callbot($command[2],array_slice($command,3),$conn);
+					}
+					else {
+						echo '<p>Bot not found.</p>';
+					}
+				}
+				else {
+					echo '<p>Bot not found.</p>';
+				}
+			}
+			else {
+				echo '<p>Not enough arguments given.</p>';
+				echo '<p>Syntax: /bot call &lt;bot id&gt; &lt;bot arguments...&gt;</p>';
+			}
 		}
 		elseif($command[1]=="list") {
-			$query="SELECT `id`,`type` FROM `chat`.`bots` WHERE `room`=".$_SESSION['room'].";";
+			$query="SELECT `id`,`type`,`created` FROM `chat`.`bots` WHERE `room`=".$_SESSION['room'].";";
 			$queryresult=mysqli_query($conn,$query);
 			if($queryresult && $queryresult->num_rows>0) {
 				echo '<dl>';
 				for($i=0; $i<$queryresult->num_rows; $i++) {
+					$row=mysqli_fetch_row($queryresult);
 					echo '<dt> id: '.$row[0].'</dt>';
 					echo '<dd> type: '.$row[1].'</dd>';
+					echo '<dd> created: '.$row[2].'</dd>';
 				}
 				echo '</dl>';
 			}
@@ -164,7 +219,7 @@ elseif($command[0]=="/bot") {
 	}
 	else {
 		echo '<p>Not enough arguments given.</p>';
-		echo '<p>Syntax: /bot &lt;add|remove&gt; ...</p>';
+		echo '<p>Syntax: /bot &lt;add|remove|call|list&gt; ...</p>';
 	}
 }
 elseif($command[0]=="/help") {
