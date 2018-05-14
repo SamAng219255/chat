@@ -6,6 +6,9 @@ require 'notify.php';
 
 $command=explode(" ",$_POST['text']);
 
+$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
+$isadmin=
+
 if($command[0]=="/invite") {
 	if(count($command)>=2) {
 		$roomquery="SELECT `id`,`users`,`owner`,`joinrestriction`,`name` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
@@ -122,12 +125,55 @@ elseif($command[0]=="/room") {
 		echo '<p>Syntax: /room &lt;delete|passcode&gt; ...</p>';
 	}
 }
+elseif($command[0]=="/bot") {
+	if(count($command)>=2) {
+		if($command[1]=="add") {
+			$roomquery="SELECT `id`,`owner` FROM `chat`.`chatrooms` WHERE `id`='".$_SESSION['room']."';";
+			$roomqueryresult=mysqli_query($conn,$roomquery);
+			$row=mysqli_fetch_row($roomqueryresult);
+			if(strtolower($row[1])==strtolower($_SESSION['username'])) {
+				if() {
+					$sql="INSERT INTO `chat`.`bots` (`id`,`type`,`room`,`data`) VALUES (0,'','','');"
+				}
+			}
+		}
+		elseif($command[1]=="remove") {
+
+		}
+		elseif($command[1]=="call") {
+
+		}
+		elseif($command[1]=="list") {
+			$query="SELECT `id`,`type` FROM `chat`.`bots` WHERE `room`=".$_SESSION['room'].";";
+			$queryresult=mysqli_query($conn,$query);
+			if($queryresult && $queryresult->num_rows>0) {
+				echo '<dl>';
+				for($i=0; $i<$queryresult->num_rows; $i++) {
+					echo '<dt> id: '.$row[0].'</dt>';
+					echo '<dd> type: '.$row[1].'</dd>';
+				}
+				echo '</dl>';
+			}
+			else {
+				echo '<p>There are no bots in this room.</p>';
+			}
+		}
+		else {
+			echo '<p>Invalid Argument.</p>';
+		}
+	}
+	else {
+		echo '<p>Not enough arguments given.</p>';
+		echo '<p>Syntax: /bot &lt;add|remove&gt; ...</p>';
+	}
+}
 elseif($command[0]=="/help") {
 	echo '<dl>
 		<dt>/invite</dt><dd>Syntax: /invite &lt;username&gt;</dd><dd>Adds a user to the chatroom.</dd>
 		<dt>/leave</dt><dd>Syntax: /leave</dd><dd>Remove yourself from the chatroom.</dd>
 		<dt>/kick</dt><dd>Syntax: /kick &lt;username&gt;</dd><dd>Remove another user from the chatroom.</dd>
 		<dt>/room</dt><dd>Syntax: /room &lt;delete|passcode&gt; ...</dd><dd>Various room commands.</dd>
+		<dt>/bot</dt><dd>Syntax: /bot &lt;add|remove|call|list&gt; ...</dd><dd>Add or Removes a bot from the chat as well as giving input to a bot or listing the current bots.</dd>
 		</dl>';
 }
 else {

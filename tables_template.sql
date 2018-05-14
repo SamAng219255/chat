@@ -53,6 +53,14 @@ CREATE TABLE `userchatroom` (
   `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+CREATE TABLE `bots` (
+  `id` int(16) NOT NULL AUTO_INCREMENT,
+  `type` varchar(16) NOT NULL,
+  `room` int(16) NOT NULL,
+  `data` text NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 /*DELIMITER $$
 CREATE DEFINER=`chatadmin`@`localhost` PROCEDURE `detectMove` () BEGIN
