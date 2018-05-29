@@ -13,10 +13,22 @@ function callbot($botid,$botargs,$conn) {
       $temp="dice";
     }
     echo '<p>You roll '.$botargs[0].' '.$botargs[1].'-sided '.$temp.'.</p>';
-    $outstr=$botargs[0]."d".$botargs[1];
+    $outstr=$botargs[0]."d".$botargs[1].": ";
+    $totalroll=0;
+    for($i=0; $i<$botargs[0]; $i++) {
+      $dieresult=rand(1,$botargs[1]);
+      $outstr.=$dieresult;
+      $totalroll+=$dieresult;
+      $outstr.=",";
+    }
+    $outstr.=" total: ".$totalroll.".";
   }
   else {
     echo "<p>Unknown bot type.</p>";
+  }
+  if(isset($outstr)) {
+    $sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`, `room`) VALUES (0,'bot_".$botid."','".$outstr."','".$botroom."')";
+    mysqli_query($conn,$sql);
   }
 }
 ?>

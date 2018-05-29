@@ -82,9 +82,14 @@
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<?php
 				if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+					$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
+					$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]==1;
 					echo '<a href="./?p=general">Chat</a>&nbsp;&nbsp&nbsp;';
 					echo '<a href="./?p=browse">Browse</a>&nbsp;&nbsp&nbsp;';
 					echo '<a href="./?p=users">Users</a>';
+					if($isadmin) {
+						echo '&nbsp;&nbsp&nbsp;<a href="./?p=admin">Admin</a>';
+					}
 				}
 				else {
 					echo '<a href="./?p=login&target=general">Chat</a>&nbsp;&nbsp&nbsp;';
@@ -124,13 +129,19 @@
 					if(isset($_GET['p'])) {
 						$page=$_GET['p'];
 					}
-					if($page=='users' && isset($_GET['user'])) {
-						$get=12;
+					if($page=='admin') {
+						$get=14;
 					}
-					elseif($page=='users') {
+					elseif($page=='users' && isset($_GET['user'])) {
 						$get=13;
 					}
+					elseif($page=='users') {
+						$get=12;
+					}
 					elseif($page=='setting') {
+						$get=11;
+					}
+					elseif($page=='settings' && isset($_GET['place']) && $_GET['place']=='replace') {
 						$get=11;
 					}
 					elseif($page=='browse') {
@@ -138,9 +149,6 @@
 					}
 					elseif($page=='chat') {
 						$get=8;
-					}
-					elseif($page=='settings' && isset($_GET['place']) && $_GET['place']=='replace') {
-						$get=11;
 					}
 					elseif($page=='settings') {
 						$get=7;
@@ -196,10 +204,13 @@
 					require 'quirks.php';
 					break;
 					case 12:
-					require 'userchat.php';
+					require 'users.php';
 					break;
 					case 13:
-					require 'users.php';
+					require 'userchat.php';
+					break;
+					case 14:
+					require 'admin.php';
 					break;
 				}
 				$getroom=0;
