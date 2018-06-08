@@ -356,6 +356,29 @@ ul.large div.p {
 	padding: 2px;
 	cursor: pointer;
 }
+ul {
+	list-style-type: none;
+}
+table.admintable {
+    border-collapse: collapse;
+		width: 90%;
+		margin: 5%;
+}
+table.admintable, table.admintable th, table.admintable td {
+    border: 1px solid black;
+}
+table.admintable td {
+	color: #1C1E06;
+}
+table.admintable tr:nth-child(even) {
+	background-color: #6A7A16;
+}
+table.admintable tr:nth-child(odd) {
+	background-color: #54610E;
+}
+table.admintable th {
+	background-color: #1C1E06;
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;

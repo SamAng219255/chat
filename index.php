@@ -4,11 +4,21 @@
 
 <html>
 	<head>
-		<?php $whoisit=$_SERVER['REMOTE_ADDR'];
-                if($whoisit=='10.183.2.3') {
-                        //echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
-			echo '<script>alert("Hello Micah...")</script>';
-                } ?>
+		<?php
+			$whoisit=$_SERVER['REMOTE_ADDR'];
+      if($whoisit=='10.183.2.3') {
+      	//echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+				echo '<script>alert("Hello Micah...")</script>';
+      }
+			require 'db.php';
+			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
+				$isbanned=mysqli_fetch_row(mysqli_query($conn,$banquery))[0]==-1;
+	      if($isbanned) {
+	      	echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+	      }
+			}
+		?>
 		<meta charset="utf-8">
 		<link rel="stylesheet" type="text/css" href="theme.css">
 		<script>
@@ -57,7 +67,6 @@
 		<script>looping=false;</script>
 		<?php
 			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
-				require 'db.php';
 				$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
 				$pmsqueryresult=mysqli_query($conn,$pmsquery);
 				$pmsrow=mysqli_fetch_row($pmsqueryresult);
