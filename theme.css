@@ -360,12 +360,12 @@ ul {
 	list-style-type: none;
 }
 table.admintable {
-    border-collapse: collapse;
-		width: 90%;
-		margin: 5%;
+	border-collapse: collapse;
+	width: 90%;
+	margin: 5%;
 }
 table.admintable, table.admintable th, table.admintable td {
-    border: 1px solid black;
+	border: 1px solid black;
 }
 table.admintable td {
 	color: #1C1E06;
@@ -378,7 +378,40 @@ table.admintable tr:nth-child(odd) {
 }
 table.admintable th {
 	background-color: #1C1E06;
+	width: 10%;
 }
+table.admintable th.sortable {
+	cursor: pointer;
+}
+table.admintable td:not(.sortable)>* {
+	width: 75%;
+	height: 75%;
+	margin: auto;
+}
+.button {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+table.admintable tr:nth-child(even) .button {
+	border-style: solid;
+	border-color: #84981B #505C10 #505C10 #84981B;
+}
+table.admintable tr:nth-child(even) .button:active {
+        border-color: #505C10 #84981B #84981B #505C10;
+}
+table.admintable tr:nth-child(odd) .button {
+        border-style: solid;
+        border-color: #697911 #3F490A #3F490A #697911;
+}
+table.admintable tr:nth-child(odd) .button:active {
+        border-color: #3F490A #697911 #697911 #3F490A;
+}
+
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;
