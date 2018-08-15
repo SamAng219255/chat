@@ -69,11 +69,27 @@ elseif($_GET['place']=='users') {
 			<td><div class="button" onclick="sure(\''.$row[1].'\',\'delete\')">Delete</div></td>
 			<td><div class="button" onclick="sure(\''.$row[1].'\',\'ban\')">Ban</div></td>
 			<td><div class="button" onclick="sure(\''.$row[1].'\',\'reset the password of\')">Reset Password</div></td>
-			<td><input onkeypress="if(event.which==13||event.keyCode==13) {  }" type="text"></td>
-		</tr>';
+			<td><input id="alertTxt'.$row[0].'" onkeypress="adminAlert('.$row[0].',\''.$row[1].'\')" type="text"></td>
+		</tr>
+		';
 	}
 	echo '
 	</table>
+	<script>
+		function adminAlert(usrId,usrNm) {
+			if(event.which==13||event.keyCode==13) {
+				$.get(\'alert.php\',{msg:document.getElementById(\'alertTxt\'+usrId).value,usr:usrNm},function(data){
+					if(data==\'success\'){
+						alert(\'Alert sent.\');
+					}
+					else {
+						alert(\'Error sending alert:\\n\'+data);
+					}
+					document.getElementById(\'alertTxt\'+usrId).value=\'\';
+				})
+			}
+		}
+	</script>
 	<script>
 		function sure(user,action) {
 			randText=Math.ceil(Math.random()*Math.pow(36,11)).toString(36).toUpperCase();
