@@ -14,9 +14,10 @@
 			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
 				$isbanned=mysqli_fetch_row(mysqli_query($conn,$banquery))[0]==-1;
-	      if($isbanned) {
-	      	echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
-	      }
+				if($isbanned) {
+					echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
+					$_SESSION['loggedin']='no';
+				}
 			}
 		?>
 		<meta charset="utf-8">

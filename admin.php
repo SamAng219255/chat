@@ -2,7 +2,8 @@
 <?php
 require 'db.php';
 $adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
-$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]==1;
+$usrperm=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0];
+$isadmin=$usrperm>0;
 if(isset($_SESSION["loggedin"]) && $isadmin) {
 if(!isset($_GET['place'])) {
 
@@ -58,7 +59,12 @@ elseif($_GET['place']=='users') {
 		if($row[3]!=$time && $row[3]!=$timewas) {
 			$place="-1";
 		}
-		echo '
+		if($row[5]<1 || $usrperm>1) {
+			$hammer='ban';
+			if($row[5]<0) {
+				$hammer='unban';
+			}
+			echo '
 		<tr>
 			<td>'.$row[0].'</td>
 			<td>'.$row[1].'</td>
@@ -67,11 +73,26 @@ elseif($_GET['place']=='users') {
 			<td>'.$row[3].'</td>
 			<td>'.$row[2].'</td>
 			<td><div class="button" onclick="sure(\''.$row[1].'\',\'delete\')">Delete</div></td>
-			<td><div class="button" onclick="sure(\''.$row[1].'\',\'ban\')">Ban</div></td>
+			<td><div class="button" onclick="sure(\''.$row[1].'\',\''.$hammer.'\')">'.ucfirst($hammer).'</div></td>
 			<td><div class="button" onclick="sure(\''.$row[1].'\',\'reset the password of\')">Reset Password</div></td>
 			<td><input id="alertTxt'.$row[0].'" onkeypress="adminAlert('.$row[0].',\''.$row[1].'\')" type="text"></td>
 		</tr>
 		';
+		}
+		else {
+			echo '
+		<tr>
+			<td>'.$row[0].'</td>
+			<td>'.$row[1].'</td>
+			<td>'.$row[5].'</td>
+			<td>'.$place.'</td>
+			<td>'.$row[3].'</td>
+			<td>'.$row[2].'</td>
+			<td></td><td></td><td></td>
+			<td><input id="alertTxt'.$row[0].'" onkeypress="adminAlert('.$row[0].',\''.$row[1].'\')" type="text"></td>
+		</tr>
+		';
+		}
 	}
 	echo '
 	</table>
@@ -96,22 +117,26 @@ elseif($_GET['place']=='users') {
 			sureTest=prompt("Are you sure you want to "+action+" "+user+"?\nIf so type the username")
 			if(sureTest==user) {
 				if(action=="delete") {
-					//delete
-					alert(user+" has been deleted.");
+					openInNewTab("adminaction/delete.php?target="+user);
 				}
 				else if(action=="ban") {
-					//ban
-					alert(user+" has been banned.");
+					openInNewTab("adminaction/ban.php?target="+user);
 				}
 				else if(action=="reset the password of") {
-					//set password to randText
-					alert(user+"\'s new password is "+randText);
+					openInNewTab("adminaction/reset.php?target="+user);
+				}
+				else if(action=="unban") {
+					openInNewTab("adminaction/unban.php?target="+user);
 				}
 				location.reload();
 			}
 			else if(sureTest!=null) {
 				alert("Incorrect Name")
 			}
+		}
+		function openInNewTab(url) {
+			var win = window.open(url,\'_blank\');
+			win.focus();
 		}
 	</script>
 ';
