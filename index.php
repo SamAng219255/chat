@@ -95,7 +95,7 @@
 			<?php
 				if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 					$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
-					$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]==1;
+					$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]>=1;
 					echo '<a href="./?p=general">Chat</a>&nbsp;&nbsp&nbsp;';
 					echo '<a href="./?p=browse">Browse</a>&nbsp;&nbsp&nbsp;';
 					echo '<a href="./?p=users">Users</a>';
