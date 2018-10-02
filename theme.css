@@ -420,7 +420,15 @@ table.admintable tr:nth-child(odd) .button {
 table.admintable tr:nth-child(odd) .button:active {
         border-color: #3F490A #697911 #697911 #3F490A;
 }
-
+p[user]::before {
+	background-size: 1.25em;
+	background-color: transparent;
+	content: "";
+	height: 1.25em;
+	width: 1.25em;
+	display: inline-block;
+	vertical-align: text-bottom;
+}
 ::placeholder {
 	color: #2C0047;
 	opacity: 1;

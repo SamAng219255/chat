@@ -18,6 +18,7 @@ CREATE TABLE `users` (
   `quirks` text NOT NULL,
   `pendingpms` varchar(256) NOT NULL DEFAULT '',
   `permissions` INT NOT NULL DEFAULT '0',
+  `away` INT NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 CREATE TABLE `chatroom` (

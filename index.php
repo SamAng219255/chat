@@ -245,10 +245,12 @@
 				$(window).blur(function() {
 					seen=false;
 					console.log("no");
+					$.post('away.php',{away:1},function(){});
 				});
 				$(window).focus(function() {
 					seen=true;
 					console.log("yes");
+					$.post('away.php',{away:0},function(){});
 				});
 			});
 			function checkseen() {

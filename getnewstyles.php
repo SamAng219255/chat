@@ -18,10 +18,17 @@ if($userqueryresult->num_rows>0) {
 }
 $vuCount=count($usersvisible);
 for($i=0; $i<$vuCount; $i++) {
-        $query="SELECT `txtcolor`,`bckcolor` FROM `chat`.`users` WHERE `username`='".$usersvisible[$i]."'";
+        $query="SELECT `txtcolor`,`bckcolor`,`active`,`away` FROM `chat`.`users` WHERE `username`='".$usersvisible[$i]."'";
         $queryresult=mysqli_query($conn,$query);
         $row=mysqli_fetch_row($queryresult);
-        echo "p[user=\"".$usersvisible[$i]."\"] {color:#$row[0];background-color:#$row[1];}\n";
+        $online="green";
+        if($row[2]=='-1') {
+                $online="grey";
+        }
+        elseif ($row[3]=='0') {
+                $online="yellow";
+        }
+        echo "p[user=\"".$usersvisible[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$usersvisible[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";
 }
 if($vuCount>0) {
 	echo json_decode('"\u001C"');
