@@ -66,7 +66,7 @@
 		<style id="colRot">/*body {filter: hue-rotate(120deg);} p[user] {filter: hue-rotate(-120deg);}*/</style>
 	</head>
 	<body>
-		<div id="body"></div>
+		<!--<div id="body"></div>-->
 		<script>looping=false;</script>
 		<?php
 			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
