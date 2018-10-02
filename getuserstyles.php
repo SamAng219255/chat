@@ -11,9 +11,12 @@ for($i=0; $i<$vuCount; $i++) {
         if($row[2]=='-1') {
                 $online="grey";
         }
-        elseif ($row[3]=='0') {
+        elseif ($row[3]=='1') {
                 $online="yellow";
         }
         echo "p[user=\"".$usersvisible[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$usersvisible[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";
+        echo "<!--";
+        var_dump($row);
+        echo "-->";
 }
 ?>

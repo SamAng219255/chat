@@ -17,6 +17,20 @@ if($userqueryresult->num_rows>0) {
         }
 }
 $vuCount=count($usersvisible);
+$ouCount=count($oldusers);
+for($i=0; $i<$ouCount; $i++) {
+        $query="SELECT `txtcolor`,`bckcolor`,`active`,`away` FROM `chat`.`users` WHERE `username`='".$oldusers[$i]."'";
+        $queryresult=mysqli_query($conn,$query);
+        $row=mysqli_fetch_row($queryresult);
+        $online="green";
+        if($row[2]=='-1') {
+                $online="grey";
+        }
+        elseif ($row[3]=='1') {
+                $online="yellow";
+        }
+        echo "p[user=\"".$oldusers[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$oldusers[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";
+}
 for($i=0; $i<$vuCount; $i++) {
         $query="SELECT `txtcolor`,`bckcolor`,`active`,`away` FROM `chat`.`users` WHERE `username`='".$usersvisible[$i]."'";
         $queryresult=mysqli_query($conn,$query);
@@ -25,7 +39,7 @@ for($i=0; $i<$vuCount; $i++) {
         if($row[2]=='-1') {
                 $online="grey";
         }
-        elseif ($row[3]=='0') {
+        elseif ($row[3]=='1') {
                 $online="yellow";
         }
         echo "p[user=\"".$usersvisible[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$usersvisible[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";

@@ -130,7 +130,7 @@ function updatechatbox() {
 		}
 		$.post('getroomnewstyles.php', {userlist: document.getElementById("visibleusers").innerHTML, lstmsg: lstmsg}, function(data) {
 			var bar=data.split(/\u001C(.+)/);
-			$('style#userlinestyles').append(bar[0]);
+			$('style#userlinestyles').html(bar[0]);
 			$('div#visibleusers').append(bar[1]);
 		});
 		if(!isNaN(foo[0])) {
