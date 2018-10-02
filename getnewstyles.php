@@ -29,6 +29,9 @@ for($i=0; $i<$ouCount; $i++) {
         elseif ($row[3]=='1') {
                 $online="yellow";
         }
+        elseif ($row[2]!='0') {
+                $online="yellow";
+        }
         echo "p[user=\"".$oldusers[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$oldusers[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";
 }
 for($i=0; $i<$vuCount; $i++) {
@@ -40,6 +43,9 @@ for($i=0; $i<$vuCount; $i++) {
                 $online="grey";
         }
         elseif ($row[3]=='1') {
+                $online="yellow";
+        }
+        elseif ($row[2]!='0') {
                 $online="yellow";
         }
         echo "p[user=\"".$usersvisible[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$usersvisible[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";

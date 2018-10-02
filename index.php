@@ -239,7 +239,10 @@
 		</script>
 		<?php echo "<script>crntpg='".$_GET["p"]."';</script>"; ?>
 		<script>
-			seen=true;
+			if(document.hasFocus()) {
+				seen=true;
+				$.post('away.php',{away:0},function(){});
+			}
 			wrongs=0;
 			$(function () {
 				$(window).blur(function() {
