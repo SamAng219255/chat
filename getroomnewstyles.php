@@ -34,6 +34,7 @@ for($i=0; $i<$ouCount; $i++) {
                 $online="yellow";
         }
         echo "p[user=\"".$oldusers[$i]."\"] {color:#$row[0];background-color:#$row[1];}\np[user=\"".$oldusers[$i]."\"]::before {background-image: url('img/better_".$online.".png');}\n";
+}
 for($i=0; $i<$vuCount; $i++) {
         $query="SELECT `txtcolor`,`bckcolor`,`active`,`away` FROM `chat`.`users` WHERE `username`='".$usersvisible[$i]."'";
         $queryresult=mysqli_query($conn,$query);
@@ -56,5 +57,5 @@ if($vuCount>0) {
 for($i=0; $i<$vuCount; $i++) {
 	echo json_decode('"\u001D"');
 	echo $usersvisible[$i];
-}
+};
 ?>
