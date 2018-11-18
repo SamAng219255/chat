@@ -1,15 +1,16 @@
 <?php
 	session_start();
+	if ((isset($_SESSION['last_active']) && (time() - $_SESSION['last_active'] > 1800)) || (!isset($_SESSION['last_active']) && isset($_SESSION['loggedin']))) {
+		session_unset();
+		session_destroy();
+	}
+	$_SESSION['last_active']=time();
 ?>
 
 <html>
 	<head>
 		<?php
 			$whoisit=$_SERVER['REMOTE_ADDR'];
-      if($whoisit=='10.183.2.3') {
-      	//echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
-				echo '<script>alert("Hello Micah...")</script>';
-      }
 			require 'db.php';
 			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";

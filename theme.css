@@ -194,6 +194,7 @@ a {
 	text-indent: 7pt;
 	outline-style: none;
 	color: #2C0047;
+	padding: 8px;
 }
 #subbut {
 	height:40px !important;
@@ -419,6 +420,12 @@ table.admintable tr:nth-child(odd) .button {
 }
 table.admintable tr:nth-child(odd) .button:active {
         border-color: #3F490A #697911 #697911 #3F490A;
+}
+textarea {
+	-webkit-appearance: textfield;
+	resize: none;
+	padding: 1px;
+	border-width: 2px;
 }
 p[user]::before {
 	background-size: 1.25em;

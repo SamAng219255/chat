@@ -12,5 +12,6 @@ if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
 	}
 	$sql="UPDATE `chat`.`users` SET `laston`=CURRENT_TIMESTAMP, `active`=".$place." WHERE `username`='".$_SESSION['username']."'";
 	mysqli_query($conn,$sql);
+	$_SESSION['last_active']=time();
 }
 ?>
