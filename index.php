@@ -1,10 +1,14 @@
 <?php
+	session_set_cookie_params(['samesite' => 'Secure']);
 	session_start();
-	if ((isset($_SESSION['last_active']) && (time() - $_SESSION['last_active'] > 1800)) || (!isset($_SESSION['last_active']) && isset($_SESSION['loggedin']))) {
-		session_unset();
-		session_destroy();
+	if ((isset($_SESSION['last_active_chat']) && (time() - $_SESSION['last_active_chat'] > 1800)) || (!isset($_SESSION['last_active_chat']) && isset($_SESSION['loggedin_chat']))) {
+		unset($_SESSION['last_active_chat']);
+		unset($_SESSION['loggedin_chat']);
+		unset($_SESSION['username_chat']);
+		unset($_SESSION['seen']);
+		unset($_SESSION['room']);
 	}
-	$_SESSION['last_active']=time();
+	$_SESSION['last_active_chat']=time();
 ?>
 
 <html>
@@ -12,12 +16,12 @@
 		<?php
 			$whoisit=$_SERVER['REMOTE_ADDR'];
 			require 'db.php';
-			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+			if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
 				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
 				$isbanned=mysqli_fetch_row(mysqli_query($conn,$banquery))[0]==-1;
 				if($isbanned) {
 					echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
-					$_SESSION['loggedin']='no';
+					$_SESSION['loggedin_chat']='no';
 				}
 			}
 		?>
@@ -70,8 +74,8 @@
 		<!--<div id="body"></div>-->
 		<script>looping=false;</script>
 		<?php
-			if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
-				$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+			if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
+				$pmsquery="SELECT `pendingpms` FROM `chat`.`users` WHERE `username`='".$_SESSION['username_chat']."';";
 				$pmsqueryresult=mysqli_query($conn,$pmsquery);
 				$pmsrow=mysqli_fetch_row($pmsqueryresult);
 				$pmslist=explode(json_decode('"\u001D"'),$pmsrow[0]);
@@ -94,7 +98,7 @@
 		<div id="topbar">
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<?php
-				if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
+				if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
 					$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
 					$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]>=1;
 					echo '<a href="./?p=general">Chat</a>&nbsp;&nbsp&nbsp;';
@@ -113,8 +117,8 @@
 			<div id="profileicon" onclick="toggleProfile();" onmouseleave="hideProfile();">
 			<div id="profilemenu" class="noselect">
 				<?php
-					if(isset($_SESSION['loggedin']) && $_SESSION['loggedin']=='yes') {
-						echo 'Signed in as: <br>'.$_SESSION['username'];
+					if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
+						echo 'Signed in as: <br>'.$_SESSION['username_chat'];
 						echo '<a href="./?page=5">Log Out</a>';
 						echo '<a href="./?p=settings">Settings</a>';
 					}

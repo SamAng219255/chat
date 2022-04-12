@@ -8,14 +8,14 @@ require 'db.php';
 
 if(isset($_POST['txtcolor'])) {
 	if(isset($_POST['reset'])) {
-		$sql="UPDATE `chat`.`users` SET txtcolor='ABA319', bckcolor='1C1E06' WHERE username='".$_SESSION['username']."';";
+		$sql="UPDATE `chat`.`users` SET txtcolor='ABA319', bckcolor='1C1E06' WHERE username='".$_SESSION['username_chat']."';";
 	}
 	else {
 		$seemove='0';
 		if(isset($_POST['leftjoinvisible']) && $_POST['leftjoinvisible']=='on') {
 			$seemove='1';
 		}
-		$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."', bckcolor='".ltrim($_POST['bckcolor'],'#')."', seemove='".$seemove."' WHERE username='".$_SESSION['username']."';";
+		$sql="UPDATE `chat`.`users` SET txtcolor='".ltrim($_POST['txtcolor'],'#')."', bckcolor='".ltrim($_POST['bckcolor'],'#')."', seemove='".$seemove."' WHERE username='".$_SESSION['username_chat']."';";
 	}
 	mysqli_query($conn,$sql);
 }
@@ -27,7 +27,7 @@ if(isset($_POST['txtcolor'])) {
 	<h1>Settings</h1>
 	<hr>
 	<?php
-	$query="SELECT `txtcolor`,`bckcolor`,`seemove` from `chat`.`users` where username='".$_SESSION['username']."';";
+	$query="SELECT `txtcolor`,`bckcolor`,`seemove` from `chat`.`users` where username='".$_SESSION['username_chat']."';";
 	$queryresult=mysqli_fetch_row(mysqli_query($conn,$query));
 	$seemove='';
 	if($queryresult[2]==1) {

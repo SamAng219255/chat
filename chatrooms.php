@@ -1,5 +1,5 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=browse">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
+<?php if(!isset($_SESSION['loggedin_chat']) || $_SESSION['loggedin_chat']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <title>Browse Chat Rooms</title>
 
@@ -11,11 +11,11 @@
 
 require 'db.php';
 $foundrooms=0;
-$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
+$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username_chat']."';";
 $queryresult=mysqli_query($conn,$query);
 if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 	$row=mysqli_fetch_row($queryresult);
-	if(!in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+	if(!in_array(strtolower($_SESSION['username_chat']),explode(json_decode('"\u001D"'),$row[2]))) {
 		if($row[3]<2) {
 			echo '<a href="./?p=chat&room='.$row[0].'"><li>';
 			echo '<div class="h3">'.$row[4].'</div>';

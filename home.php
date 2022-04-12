@@ -1,11 +1,11 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
+<?php if(!isset($_SESSION['loggedin_chat']) || $_SESSION['loggedin_chat']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <title>General Chat</title>
 
 <style id="userlinestyles"><?php
 require 'db.php';
-$sightquery="SELECT `seemove`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+$sightquery="SELECT `seemove`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username_chat']."';";
 $cansee=mysqli_fetch_row(mysqli_query($conn,$sightquery));
 if($cansee[0]==1) {
 	echo 'p[user="join"] {visibility:visible; margin-bottom:1em; height:10px} p[user="left"] {visibility:visible; margin-bottom:1em; height:10px}';
@@ -15,24 +15,24 @@ if($cansee[0]==1) {
 <div id="chatpicker">
 <a href="./?p=general">General</a>
 <?php
-	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
+	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username_chat']."';";
 	$queryresult=mysqli_query($conn,$query);
 	if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		echo '<a href="./?p=chat&room='.$row[0].'">'.$row[2].'</a>';
 	}}
-	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
+	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username_chat']."';";
 	$queryresult=mysqli_query($conn,$query);
 	if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
-		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+		if(in_array(strtolower($_SESSION['username_chat']),explode(json_decode('"\u001D"'),$row[2]))) {
 			echo '<a href="./?p=chat&room='.$row[0].'">'.$row[4].'</a>';
 		}
 	}}
 ?>
 <a onclick="document.getElementById('darken').style='visibility:visible;'; document.getElementById('createroom').style='visibility:visible;';">Create a Private Chat Room</a>
 </div>
-<div id="username" style="visibility:hidden;"><?php echo $_SESSION['username']; ?></div>
+<div id="username" style="visibility:hidden;"><?php echo $_SESSION['username_chat']; ?></div>
 <div id="room">
 <div id="textarea">
 <?php
@@ -96,7 +96,7 @@ if($cansee[0]==1) {
 <?php
 if(isset($_POST['text'])) {
 	$text=$_POST['text'];
-	$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."')";
+	$sql="INSERT INTO `chat`.`chatroom` (`id`, `username`, `content`) VALUES (0,'".$_SESSION['username_chat']."','".addslashes($text)."')";
 	mysqli_query($conn,$sql);
 	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }

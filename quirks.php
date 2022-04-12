@@ -20,7 +20,7 @@ if(isset($_POST['patnum'])) {
 			$total.=$_POST['pattwo'.$i];
 		}
 	}
-	$sql="UPDATE `chat`.`users` SET quirks='".addslashes($total)."' WHERE username='".$_SESSION['username']."';";
+	$sql="UPDATE `chat`.`users` SET quirks='".addslashes($total)."' WHERE username='".$_SESSION['username_chat']."';";
 	mysqli_query($conn,$sql);
 }
 
@@ -32,7 +32,7 @@ if(isset($_POST['patnum'])) {
 	<form method="post">
 	<div id="rows">
 		<?php
-			$query="SELECT `quirks` from `chat`.`users` where username='".$_SESSION['username']."';";
+			$query="SELECT `quirks` from `chat`.`users` where username='".$_SESSION['username_chat']."';";
 			$queryresult=mysqli_fetch_row(mysqli_query($conn,$query))[0];
 			$patterns=explode(json_decode('"\u001F"'), $queryresult);
 			$patternslen=count($patterns);

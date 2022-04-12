@@ -2,10 +2,10 @@
 
 <?php
 
-$_SESSION['loggedin']='yes';
-$_SESSION['username']=addslashes($_POST['username']);
+$_SESSION['loggedin_chat']='yes';
+$_SESSION['username_chat']=addslashes($_POST['username']);
 
-$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
+$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username_chat']."';";
 mysqli_query($conn,$ipsql);
 
 if(isset($_POST["target"])) {

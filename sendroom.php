@@ -10,7 +10,7 @@
 require 'replace.php';
 require 'db.php';
 $text=$_POST['text'];
-$quirkquery="SELECT `quirks`,`username` from `chat`.`users` where username='".$_SESSION['username']."'";
+$quirkquery="SELECT `quirks`,`username` from `chat`.`users` where username='".$_SESSION['username_chat']."'";
 $quirk=mysqli_fetch_row(mysqli_query($conn,$quirkquery))[0];
 $text=replacechat($text,$quirk);
 $text=addslashes($text);
@@ -21,7 +21,7 @@ if(trim($text)!="") {
 	var_dump(mysqli_query($conn,$sql));
 }
 
-$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username']."';";
+$ipsql="UPDATE `chat`.`users` SET `ip`='".$_SERVER['REMOTE_ADDR']."' WHERE `username`='".$_SESSION['username_chat']."';";
 mysqli_query($conn,$ipsql);
 
 ?>

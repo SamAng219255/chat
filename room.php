@@ -1,5 +1,5 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
+<?php if(!isset($_SESSION['loggedin_chat']) || $_SESSION['loggedin_chat']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <?php
 require 'db.php';
@@ -17,24 +17,24 @@ echo '<title>'.$roomnamerow[1].'</title>';
 <?php
 	$roomid=intval($_GET['room']);
 	$_SESSION['room']=$roomid;
-	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username']."';";
+	$query="SELECT `id`,`owner`,`name` FROM `chat`.`chatrooms` WHERE `owner`='".$_SESSION['username_chat']."';";
 	$queryresult=mysqli_query($conn,$query);
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
 		echo '<a href="./?p=chat&room='.$row[0].'">'.$row[2].'</a>';
 	}
-	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username']."';";
+	$query="SELECT * FROM `chat`.`chatrooms` WHERE NOT `owner`='".$_SESSION['username_chat']."';";
 	$queryresult=mysqli_query($conn,$query);
 	for($i=0; $i<$queryresult->num_rows; $i++) {
 		$row=mysqli_fetch_row($queryresult);
-		if(in_array(strtolower($_SESSION['username']),explode(json_decode('"\u001D"'),$row[2]))) {
+		if(in_array(strtolower($_SESSION['username_chat']),explode(json_decode('"\u001D"'),$row[2]))) {
 			echo '<a href="./?p=chat&room='.$row[0].'">'.$row[4].'</a>';
 		}
 	}
 ?>
 <a onclick="document.getElementById('darken').style='visibility:visible;'; document.getElementById('createroom').style='visibility:visible;';">Create a Private Chat Room</a>
 </div>
-<div id="username" style="visibility:hidden;"><?php echo $_SESSION['username']; ?></div>
+<div id="username" style="visibility:hidden;"><?php echo $_SESSION['username_chat']; ?></div>
 <div id="room">
 <div id="textarea">
 <?php
@@ -105,7 +105,7 @@ element.scrollTop = element.scrollHeight;
 <?php
 if(isset($_POST['text'])) {
 	$text=$_POST['text'];
-	$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`,`room`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."',".$_SESSION['room'].")";
+	$sql="INSERT INTO `chat`.`privchatroom` (`id`, `username`, `content`,`room`) VALUES (0,'".$_SESSION['username_chat']."','".addslashes($text)."',".$_SESSION['room'].")";
 	mysqli_query($conn,$sql);
 	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }

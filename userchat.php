@@ -1,11 +1,11 @@
 <?php $fooip=explode("/",$_SERVER['PHP_SELF']); if($fooip[count($fooip)-1]!='index.php' ) {echo '<meta http-equiv="refresh" content="0; URL=./?p=users">';};?>
-<?php if(!isset($_SESSION['loggedin']) || $_SESSION['loggedin']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
+<?php if(!isset($_SESSION['loggedin_chat']) || $_SESSION['loggedin_chat']!='yes') { echo '<meta http-equiv="refresh" content="0; URL=./?p=login">'; };?>
 
 <title>Users</title>
 
 <style id="userlinestyles"><?php
 require 'db.php';
-$stylequeryone="SELECT `txtcolor`,`bckcolor`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+$stylequeryone="SELECT `txtcolor`,`bckcolor`,`username` FROM `chat`.`users` WHERE `username`='".$_SESSION['username_chat']."';";
 $styleone=mysqli_fetch_row(mysqli_query($conn,$stylequeryone));
 $stylequerytwo="SELECT `txtcolor`,`bckcolor`,`username` FROM `chat`.`users` WHERE `username`='".$_GET['user']."';";
 $styletwo=mysqli_fetch_row(mysqli_query($conn,$stylequerytwo));
@@ -15,7 +15,7 @@ echo 'p[user="'.strtolower($styletwo[2]).'"] {color:#'.$styletwo[0].';background
 
 <div id="chatpicker">
 	<?php
-		$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username']."') AS `table`;";
+		$query="SELECT DISTINCT * FROM (SELECT recipient AS user FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username_chat']."' UNION SELECT username AS user FROM `chat`.`userchatroom` WHERE `recipient`='".$_SESSION['username_chat']."') AS `table`;";
 		$queryresult=mysqli_query($conn,$query);
 		if($queryresult) {for($i=0; $i<$queryresult->num_rows; $i++) {
 			$row=mysqli_fetch_row($queryresult);
@@ -28,7 +28,7 @@ echo 'p[user="'.strtolower($styletwo[2]).'"] {color:#'.$styletwo[0].';background
 <div id="room">
 	<div id="textarea">
 		<?php
-			$query="SELECT DISTINCT * FROM ( SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username']."' AND `recipient`='".$_GET['user']."' UNION SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_GET['user']."' AND `recipient`='".$_SESSION['username']."' ORDER BY id DESC LIMIT 256 ) AS `table` ORDER by id ASC";
+			$query="SELECT DISTINCT * FROM ( SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_SESSION['username_chat']."' AND `recipient`='".$_GET['user']."' UNION SELECT * FROM `chat`.`userchatroom` WHERE `username`='".$_GET['user']."' AND `recipient`='".$_SESSION['username_chat']."' ORDER BY id DESC LIMIT 256 ) AS `table` ORDER by id ASC";
 			$queryresult=mysqli_query($conn,$query);
 			//var_dump($queryresult);
 			//echo '<br>';
@@ -88,7 +88,7 @@ echo 'p[user="'.strtolower($styletwo[2]).'"] {color:#'.$styletwo[0].';background
 <?php
 if(isset($_POST['text'])) {
 	$text=$_POST['text'];
-	$sql="INSERT INTO `chat`.`userchatroom` (`id`, `username`, `content`, `recipient`) VALUES (0,'".$_SESSION['username']."','".addslashes($text)."','".addslashes($_GET['user'])."')";
+	$sql="INSERT INTO `chat`.`userchatroom` (`id`, `username`, `content`, `recipient`) VALUES (0,'".$_SESSION['username_chat']."','".addslashes($text)."','".addslashes($_GET['user'])."')";
 	mysqli_query($conn,$sql);
 	echo '<meta http-equiv="refresh" content="0; URL=./?p=general">';
 }

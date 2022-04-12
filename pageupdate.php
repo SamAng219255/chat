@@ -30,7 +30,7 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 			$lastmsg=$row[0];
 		}
 	}
-	$pendingquery="SELECT `username`,`pending` FROM `chat`.`users` WHERE `username`='".$_SESSION['username']."';";
+	$pendingquery="SELECT `username`,`pending` FROM `chat`.`users` WHERE `username`='".$_SESSION['username_chat']."';";
 	$pendingqueryresult=mysqli_query($conn,$pendingquery);
 	$pendingrow=mysqli_fetch_row($pendingqueryresult);
 	$temp=array();
@@ -45,7 +45,7 @@ if(isset($_POST['last']) && !empty($_POST['last'])) {
 		}
 		$newpending.=$temp[i];
 	}
-	$pendingsql="UPDATE `chat`.`users` SET `pending`='".$newpending."' WHERE `username`='".$_SESSION['username']."';";
+	$pendingsql="UPDATE `chat`.`users` SET `pending`='".$newpending."' WHERE `username`='".$_SESSION['username_chat']."';";
 	mysqli_query($conn,$pendingsql);
 	echo $lastmsg.'|';
 	echo $echos;
