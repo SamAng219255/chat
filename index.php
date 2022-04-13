@@ -17,7 +17,7 @@
 			$whoisit=$_SERVER['REMOTE_ADDR'];
 			require 'db.php';
 			if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
-				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
+				$banquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username_chat"]."';";
 				$isbanned=mysqli_fetch_row(mysqli_query($conn,$banquery))[0]==-1;
 				if($isbanned) {
 					echo '<meta http-equiv="refresh" content="0; URL=https://youtu.be/dQw4w9WgXcQ">';
@@ -91,7 +91,7 @@
 					echo $pmslist[0].$extras.' sent you a message';
 					echo '</div>';
 				}
-				$pmssql="UPDATE `chat`.`users` SET `pendingpms`='' WHERE `username`='".$_SESSION["username"]."';";
+				$pmssql="UPDATE `chat`.`users` SET `pendingpms`='' WHERE `username`='".$_SESSION["username_chat"]."';";
 				mysqli_query($conn,$pmssql);
 			}
 		?>
@@ -99,7 +99,7 @@
 			<a href="./?p=home">Home</a>&nbsp;&nbsp&nbsp;
 			<?php
 				if(isset($_SESSION['loggedin_chat']) && $_SESSION['loggedin_chat']=='yes') {
-					$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username"]."';";
+					$adminquery="SELECT `permissions` FROM `chat`.`users` WHERE `username`='".$_SESSION["username_chat"]."';";
 					$isadmin=mysqli_fetch_row(mysqli_query($conn,$adminquery))[0]>=1;
 					echo '<a href="./?p=general">Chat</a>&nbsp;&nbsp&nbsp;';
 					echo '<a href="./?p=browse">Browse</a>&nbsp;&nbsp&nbsp;';
